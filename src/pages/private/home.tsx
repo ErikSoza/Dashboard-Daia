@@ -1,12 +1,13 @@
-import React, { useEffect, useState } from "react";
-import Layout from "../../components/common/layout.tsx";
-import TableContainer from "@mui/material/TableContainer";
-import Paper from "@mui/material/Paper";
-import Grafico from "../../components/Grafico.tsx";
-import Botones from "../../components/common/botones.tsx";
-import Tabla from "../../components/common/Tabla.tsx";
 import Card from "../../components/Card.tsx";
 import { Data } from "../../models/models.tsx";
+import Grafico from "../../components/Grafico.tsx";
+import Tabla from "../../components/common/Tabla.tsx";
+import Layout from "../../components/common/layout.tsx";
+import Botones from "../../components/common/botones.tsx";
+
+import React, { useEffect, useState } from "react";
+import Paper from "@mui/material/Paper";
+import TableContainer from "@mui/material/TableContainer";
 
 // Importar dinámicamente todos los archivos JSON en utils
 const requireJson = (require as any).context("../../utils", false, /\.json$/);
@@ -53,21 +54,14 @@ function Home() {
 
   return (
     <Layout>
-      <TableContainer component={Paper} sx={{ p: 2 }}> 
-        <div style={{ textAlign: "center" , display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center" }}>
-          <Botones chartType={chartType} setChartType={setChartType} />
-          <Grafico data={pulseData} type={chartType} />
-        </div>
-      </TableContainer>
+      <div style={{ textAlign: "center" , display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center" }}>
+        <Botones chartType={chartType} setChartType={setChartType} />
+        <Grafico data={pulseData} type={chartType} />
+      </div>
+        
       <TableContainer component={Paper} sx={{ p: 2 }}>
         <div
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-        >
+          style={{display: "flex",flexDirection: "column",alignItems: "center",justifyContent: "center"}}>
           <h4>Tabla de Datos</h4>
           <Tabla rows={pulseData} />
         </div>
@@ -76,5 +70,6 @@ function Home() {
     </Layout>
   );
 }
+
 
 export default Home;
