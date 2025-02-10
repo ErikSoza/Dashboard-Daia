@@ -1,0 +1,853 @@
+[
+    {
+        "end_device_ids": {
+            "device_id": "em300-di",
+            "application_ids": {
+                "application_id": "daia-sensor-em300"
+            },
+            "dev_eui": "24E124136C482304",
+            "join_eui": "24E124C0002A0001",
+            "dev_addr": "260DA6E2"
+        },
+        "correlation_ids": [
+            "gs:uplink:01JKCFZZBE8GRB7SHMMCA727F9"
+        ],
+        "received_at": "2025-02-06T02:04:03.022996423Z",
+        "uplink_message": {
+            "session_key_id": "AZTN7na5Ikz11RtlE7G4bg==",
+            "f_port": 85,
+            "f_cnt": 727,
+            "frm_payload": "AXVjA2frAARoVQXIxAgAAA==",
+            "decoded_payload": {
+                "battery": 99,
+                "humidity": 42.5,
+                "pulse": 2244,
+                "temperature": 23.5
+            },
+            "rx_metadata": [
+                {
+                    "gateway_ids": {
+                        "gateway_id": "daia-gateway",
+                        "eui": "24E124FFFEFAF7FD"
+                    },
+                    "time": "2025-02-06T02:03:53.576Z",
+                    "timestamp": 3457427176,
+                    "rssi": -101,
+                    "channel_rssi": -101,
+                    "snr": 1.5,
+                    "frequency_offset": "607",
+                    "location": {
+                        "latitude": -34.9861347413862,
+                        "longitude": -71.238780895348,
+                        "source": "SOURCE_REGISTRY"
+                    },
+                    "uplink_token": "ChoKGAoMZGFpYS1nYXRld2F5Eggk4ST//vr3/RDozdDwDBoMCJKxkL0GELS8/vsCIMD03/XP4yoqDAiJsZC9BhCAoNSSAg==",
+                    "channel_index": 4,
+                    "gps_time": "2025-02-06T02:03:53.576Z",
+                    "received_at": "2025-02-06T02:04:02.630485097Z"
+                }
+            ],
+            "settings": {
+                "data_rate": {
+                    "lora": {
+                        "bandwidth": 125000,
+                        "spreading_factor": 7,
+                        "coding_rate": "4/5"
+                    }
+                },
+                "frequency": "917600000",
+                "timestamp": 3457427176,
+                "time": "2025-02-06T02:03:53.576Z"
+            },
+            "received_at": "2025-02-06T02:04:02.800103609Z",
+            "consumed_airtime": "0.066816s",
+            "network_ids": {
+                "net_id": "000013",
+                "ns_id": "EC656E0000000183",
+                "tenant_id": "ttn",
+                "cluster_id": "au1",
+                "cluster_address": "au1.cloud.thethings.network"
+            }
+        }
+    },
+    {
+        "end_device_ids": {
+            "device_id": "em300-di",
+            "application_ids": {
+                "application_id": "daia-sensor-em300"
+            },
+            "dev_eui": "24E124136C482304",
+            "join_eui": "24E124C0002A0001",
+            "dev_addr": "260DA6E2"
+        },
+        "correlation_ids": [
+            "gs:uplink:01JKCG94A80EEPAA47Y2DBM6YB"
+        ],
+        "received_at": "2025-02-06T02:09:02.999411854Z",
+        "uplink_message": {
+            "session_key_id": "AZTN7na5Ikz11RtlE7G4bg==",
+            "f_port": 85,
+            "f_cnt": 728,
+            "frm_payload": "AXVjA2frAARoVwXIxAgAAA==",
+            "decoded_payload": {
+                "battery": 99,
+                "humidity": 43.5,
+                "pulse": 2244,
+                "temperature": 23.5
+            },
+            "rx_metadata": [
+                {
+                    "gateway_ids": {
+                        "gateway_id": "daia-gateway",
+                        "eui": "24E124FFFEFAF7FD"
+                    },
+                    "time": "2025-02-06T02:08:53.568Z",
+                    "timestamp": 3757421442,
+                    "rssi": -102,
+                    "channel_rssi": -102,
+                    "snr": -2,
+                    "frequency_offset": "651",
+                    "location": {
+                        "latitude": -34.9861347413862,
+                        "longitude": -71.238780895348,
+                        "source": "SOURCE_REGISTRY"
+                    },
+                    "uplink_token": "ChoKGAoMZGFpYS1nYXRld2F5Eggk4ST//vr3/RCC59b/DRoMCL6zkL0GEMf+zfgCINDnlL6t7CoqDAi1s5C9BhCA/OuOAg==",
+                    "channel_index": 2,
+                    "gps_time": "2025-02-06T02:08:53.568Z",
+                    "received_at": "2025-02-06T02:09:02.623399292Z"
+                }
+            ],
+            "settings": {
+                "data_rate": {
+                    "lora": {
+                        "bandwidth": 125000,
+                        "spreading_factor": 7,
+                        "coding_rate": "4/5"
+                    }
+                },
+                "frequency": "917200000",
+                "timestamp": 3757421442,
+                "time": "2025-02-06T02:08:53.568Z"
+            },
+            "received_at": "2025-02-06T02:09:02.793232428Z",
+            "consumed_airtime": "0.066816s",
+            "network_ids": {
+                "net_id": "000013",
+                "ns_id": "EC656E0000000183",
+                "tenant_id": "ttn",
+                "cluster_id": "au1",
+                "cluster_address": "au1.cloud.thethings.network"
+            }
+        }
+    },
+    {
+        "end_device_ids": {
+            "device_id": "em300-di",
+            "application_ids": {
+                "application_id": "daia-sensor-em300"
+            },
+            "dev_eui": "24E124136C482304",
+            "join_eui": "24E124C0002A0001",
+            "dev_addr": "260DA6E2"
+        },
+        "correlation_ids": [
+            "gs:uplink:01JKCGJ98ZM3M9AWY0JRM662KY"
+        ],
+        "received_at": "2025-02-06T02:14:02.990596419Z",
+        "uplink_message": {
+            "session_key_id": "AZTN7na5Ikz11RtlE7G4bg==",
+            "f_port": 85,
+            "f_cnt": 729,
+            "frm_payload": "AXVjA2fpAARoVwXIxAgAAA==",
+            "decoded_payload": {
+                "battery": 99,
+                "humidity": 43.5,
+                "pulse": 2244,
+                "temperature": 23.3
+            },
+            "rx_metadata": [
+                {
+                    "gateway_ids": {
+                        "gateway_id": "daia-gateway",
+                        "eui": "24E124FFFEFAF7FD"
+                    },
+                    "time": "2025-02-06T02:13:53.560Z",
+                    "timestamp": 4057415716,
+                    "rssi": -100,
+                    "channel_rssi": -100,
+                    "snr": 2.2,
+                    "frequency_offset": "599",
+                    "location": {
+                        "latitude": -34.9861347413862,
+                        "longitude": -71.238780895348,
+                        "source": "SOURCE_REGISTRY"
+                    },
+                    "uplink_token": "ChoKGAoMZGFpYS1nYXRld2F5Eggk4ST//vr3/RCkgN2ODxoMCOq1kL0GELHytfQCIKCZyoaL9SoqDAjhtZC9BhCA2IOLAg==",
+                    "channel_index": 4,
+                    "gps_time": "2025-02-06T02:13:53.560Z",
+                    "received_at": "2025-02-06T02:14:02.614615910Z"
+                }
+            ],
+            "settings": {
+                "data_rate": {
+                    "lora": {
+                        "bandwidth": 125000,
+                        "spreading_factor": 7,
+                        "coding_rate": "4/5"
+                    }
+                },
+                "frequency": "917600000",
+                "timestamp": 4057415716,
+                "time": "2025-02-06T02:13:53.560Z"
+            },
+            "received_at": "2025-02-06T02:14:02.784470495Z",
+            "consumed_airtime": "0.066816s",
+            "network_ids": {
+                "net_id": "000013",
+                "ns_id": "EC656E0000000183",
+                "tenant_id": "ttn",
+                "cluster_id": "au1",
+                "cluster_address": "au1.cloud.thethings.network"
+            }
+        }
+    },
+    {
+        "end_device_ids": {
+            "device_id": "em300-di",
+            "application_ids": {
+                "application_id": "daia-sensor-em300"
+            },
+            "dev_eui": "24E124136C482304",
+            "join_eui": "24E124C0002A0001",
+            "dev_addr": "260DA6E2"
+        },
+        "correlation_ids": [
+            "gs:uplink:01JKCGVE823FP1CB9BW7X3Y12F"
+        ],
+        "received_at": "2025-02-06T02:19:02.997015050Z",
+        "uplink_message": {
+            "session_key_id": "AZTN7na5Ikz11RtlE7G4bg==",
+            "f_port": 85,
+            "f_cnt": 730,
+            "frm_payload": "AXVjA2foAARoWAXIxAgAAA==",
+            "decoded_payload": {
+                "battery": 99,
+                "humidity": 44,
+                "pulse": 2244,
+                "temperature": 23.2
+            },
+            "rx_metadata": [
+                {
+                    "gateway_ids": {
+                        "gateway_id": "daia-gateway",
+                        "eui": "24E124FFFEFAF7FD"
+                    },
+                    "time": "2025-02-06T02:18:53.557Z",
+                    "timestamp": 62447525,
+                    "rssi": -96,
+                    "channel_rssi": -96,
+                    "snr": 5.8,
+                    "frequency_offset": "602",
+                    "location": {
+                        "latitude": -34.9861347413862,
+                        "longitude": -71.238780895348,
+                        "source": "SOURCE_REGISTRY"
+                    },
+                    "uplink_token": "ChoKGAoMZGFpYS1nYXRld2F5Eggk4ST//vr3/RClv+MdGgwIlriQvQYQpMr59QIgiLmm0ej9KioMCI24kL0GEMDKzIkC",
+                    "channel_index": 5,
+                    "gps_time": "2025-02-06T02:18:53.557Z",
+                    "received_at": "2025-02-06T02:19:02.784229668Z"
+                }
+            ],
+            "settings": {
+                "data_rate": {
+                    "lora": {
+                        "bandwidth": 125000,
+                        "spreading_factor": 7,
+                        "coding_rate": "4/5"
+                    }
+                },
+                "frequency": "917800000",
+                "timestamp": 62447525,
+                "time": "2025-02-06T02:18:53.557Z"
+            },
+            "received_at": "2025-02-06T02:19:02.787334707Z",
+            "consumed_airtime": "0.071936s",
+            "network_ids": {
+                "net_id": "000013",
+                "ns_id": "EC656E0000000183",
+                "tenant_id": "ttn",
+                "cluster_id": "au1",
+                "cluster_address": "au1.cloud.thethings.network"
+            }
+        }
+    },
+    {
+        "end_device_ids": {
+            "device_id": "em300-di",
+            "application_ids": {
+                "application_id": "daia-sensor-em300"
+            },
+            "dev_eui": "24E124136C482304",
+            "join_eui": "24E124C0002A0001",
+            "dev_addr": "260DA6E2"
+        },
+        "correlation_ids": [
+            "gs:uplink:01JKCH4K6VD3S5DRB7J56WRXEB"
+        ],
+        "received_at": "2025-02-06T02:24:02.987795098Z",
+        "uplink_message": {
+            "session_key_id": "AZTN7na5Ikz11RtlE7G4bg==",
+            "f_port": 85,
+            "f_cnt": 731,
+            "frm_payload": "AXVjA2flAARoWgXIxggAAA==",
+            "decoded_payload": {
+                "battery": 99,
+                "humidity": 45,
+                "pulse": 2246,
+                "temperature": 22.9
+            },
+            "rx_metadata": [
+                {
+                    "gateway_ids": {
+                        "gateway_id": "daia-gateway",
+                        "eui": "24E124FFFEFAF7FD"
+                    },
+                    "time": "2025-02-06T02:23:53.544Z",
+                    "timestamp": 362436893,
+                    "rssi": -103,
+                    "channel_rssi": -103,
+                    "snr": -4.2,
+                    "frequency_offset": "648",
+                    "location": {
+                        "latitude": -34.9861347413862,
+                        "longitude": -71.238780895348,
+                        "source": "SOURCE_REGISTRY"
+                    },
+                    "uplink_token": "ChoKGAoMZGFpYS1nYXRld2F5Eggk4ST//vr3/RCdsumsARoMCMK6kL0GEJWOxvICIMiysJfGhisqDAi5upC9BhCAkLODAg==",
+                    "channel_index": 1,
+                    "gps_time": "2025-02-06T02:23:53.544Z",
+                    "received_at": "2025-02-06T02:24:02.607572867Z"
+                }
+            ],
+            "settings": {
+                "data_rate": {
+                    "lora": {
+                        "bandwidth": 125000,
+                        "spreading_factor": 7,
+                        "coding_rate": "4/5"
+                    }
+                },
+                "frequency": "917000000",
+                "timestamp": 362436893,
+                "time": "2025-02-06T02:23:53.544Z"
+            },
+            "received_at": "2025-02-06T02:24:02.780043905Z",
+            "consumed_airtime": "0.066816s",
+            "network_ids": {
+                "net_id": "000013",
+                "ns_id": "EC656E0000000183",
+                "tenant_id": "ttn",
+                "cluster_id": "au1",
+                "cluster_address": "au1.cloud.thethings.network"
+            }
+        }
+    },
+    {
+        "end_device_ids": {
+            "device_id": "em300-di",
+            "application_ids": {
+                "application_id": "daia-sensor-em300"
+            },
+            "dev_eui": "24E124136C482304",
+            "join_eui": "24E124C0002A0001",
+            "dev_addr": "260DA6E2"
+        },
+        "correlation_ids": [
+            "gs:uplink:01JKCHDR5JG3MQXZ0RNQ94NFD5"
+        ],
+        "received_at": "2025-02-06T02:29:02.980237294Z",
+        "uplink_message": {
+            "session_key_id": "AZTN7na5Ikz11RtlE7G4bg==",
+            "f_port": 85,
+            "f_cnt": 732,
+            "frm_payload": "AXVjA2flAARoWgXIxggAAA==",
+            "decoded_payload": {
+                "battery": 99,
+                "humidity": 45,
+                "pulse": 2246,
+                "temperature": 22.9
+            },
+            "rx_metadata": [
+                {
+                    "gateway_ids": {
+                        "gateway_id": "daia-gateway",
+                        "eui": "24E124FFFEFAF7FD"
+                    },
+                    "time": "2025-02-06T02:28:53.536Z",
+                    "timestamp": 662431146,
+                    "rssi": -93,
+                    "channel_rssi": -93,
+                    "snr": 9.8,
+                    "frequency_offset": "586",
+                    "location": {
+                        "latitude": -34.9861347413862,
+                        "longitude": -71.238780895348,
+                        "source": "SOURCE_REGISTRY"
+                    },
+                    "uplink_token": "ChoKGAoMZGFpYS1nYXRld2F5Eggk4ST//vr3/RCqy++7AhoMCO68kL0GEOG0tO4CIJDA5N+jjysqDAjlvJC9BhCA7Mr/AQ==",
+                    "channel_index": 7,
+                    "gps_time": "2025-02-06T02:28:53.536Z",
+                    "received_at": "2025-02-06T02:29:02.598894287Z"
+                }
+            ],
+            "settings": {
+                "data_rate": {
+                    "lora": {
+                        "bandwidth": 125000,
+                        "spreading_factor": 7,
+                        "coding_rate": "4/5"
+                    }
+                },
+                "frequency": "918200000",
+                "timestamp": 662431146,
+                "time": "2025-02-06T02:28:53.536Z"
+            },
+            "received_at": "2025-02-06T02:29:02.771351318Z",
+            "consumed_airtime": "0.066816s",
+            "network_ids": {
+                "net_id": "000013",
+                "ns_id": "EC656E0000000183",
+                "tenant_id": "ttn",
+                "cluster_id": "au1",
+                "cluster_address": "au1.cloud.thethings.network"
+            }
+        }
+    },
+    {
+        "end_device_ids": {
+            "device_id": "em300-di",
+            "application_ids": {
+                "application_id": "daia-sensor-em300"
+            },
+            "dev_eui": "24E124136C482304",
+            "join_eui": "24E124C0002A0001",
+            "dev_addr": "260DA6E2"
+        },
+        "correlation_ids": [
+            "gs:uplink:01JKCHPX4BDVFB64849D68N6G7"
+        ],
+        "received_at": "2025-02-06T02:34:02.970375933Z",
+        "uplink_message": {
+            "session_key_id": "AZTN7na5Ikz11RtlE7G4bg==",
+            "f_port": 85,
+            "f_cnt": 733,
+            "frm_payload": "AXVjA2flAARoWwXIxggAAA==",
+            "decoded_payload": {
+                "battery": 99,
+                "humidity": 45.5,
+                "pulse": 2246,
+                "temperature": 22.9
+            },
+            "rx_metadata": [
+                {
+                    "gateway_ids": {
+                        "gateway_id": "daia-gateway",
+                        "eui": "24E124FFFEFAF7FD"
+                    },
+                    "time": "2025-02-06T02:33:53.528Z",
+                    "timestamp": 962425382,
+                    "rssi": -101,
+                    "channel_rssi": -101,
+                    "snr": 0.2,
+                    "frequency_offset": "659",
+                    "location": {
+                        "latitude": -34.9861347413862,
+                        "longitude": -71.238780895348,
+                        "source": "SOURCE_REGISTRY"
+                    },
+                    "uplink_token": "ChoKGAoMZGFpYS1nYXRld2F5Eggk4ST//vr3/RCm5PXKAxoMCJq/kL0GEKDs9+oCIPDIl6iBmCsqDAiRv5C9BhCAyOL7AQ==",
+                    "channel_index": 2,
+                    "gps_time": "2025-02-06T02:33:53.528Z",
+                    "received_at": "2025-02-06T02:34:02.591610510Z"
+                }
+            ],
+            "settings": {
+                "data_rate": {
+                    "lora": {
+                        "bandwidth": 125000,
+                        "spreading_factor": 7,
+                        "coding_rate": "4/5"
+                    }
+                },
+                "frequency": "917200000",
+                "timestamp": 962425382,
+                "time": "2025-02-06T02:33:53.528Z"
+            },
+            "received_at": "2025-02-06T02:34:02.764629264Z",
+            "consumed_airtime": "0.066816s",
+            "network_ids": {
+                "net_id": "000013",
+                "ns_id": "EC656E0000000183",
+                "tenant_id": "ttn",
+                "cluster_id": "au1",
+                "cluster_address": "au1.cloud.thethings.network"
+            }
+        }
+    },
+    {
+        "end_device_ids": {
+            "device_id": "em300-di",
+            "application_ids": {
+                "application_id": "daia-sensor-em300"
+            },
+            "dev_eui": "24E124136C482304",
+            "join_eui": "24E124C0002A0001",
+            "dev_addr": "260DA6E2"
+        },
+        "correlation_ids": [
+            "gs:uplink:01JKCJ022SH4X1EYBA8STMEKA6"
+        ],
+        "received_at": "2025-02-06T02:39:02.954755664Z",
+        "uplink_message": {
+            "session_key_id": "AZTN7na5Ikz11RtlE7G4bg==",
+            "f_port": 85,
+            "f_cnt": 734,
+            "frm_payload": "AXVjA2fjAARoXAXIyAgAAA==",
+            "decoded_payload": {
+                "battery": 99,
+                "humidity": 46,
+                "pulse": 2248,
+                "temperature": 22.7
+            },
+            "rx_metadata": [
+                {
+                    "gateway_ids": {
+                        "gateway_id": "daia-gateway",
+                        "eui": "24E124FFFEFAF7FD"
+                    },
+                    "time": "2025-02-06T02:38:53.505Z",
+                    "timestamp": 1262405326,
+                    "rssi": -102,
+                    "channel_rssi": -102,
+                    "snr": -0.8,
+                    "frequency_offset": "662",
+                    "location": {
+                        "latitude": -34.9861347413862,
+                        "longitude": -71.238780895348,
+                        "source": "SOURCE_REGISTRY"
+                    },
+                    "uplink_token": "ChoKGAoMZGFpYS1nYXRld2F5Eggk4ST//vr3/RDOjfvZBBoMCMbBkL0GEIPEoOICILCp4uneoCsqDAi9wZC9BhDA4ObwAQ==",
+                    "channel_index": 3,
+                    "gps_time": "2025-02-06T02:38:53.505Z",
+                    "received_at": "2025-02-06T02:39:02.573402737Z"
+                }
+            ],
+            "settings": {
+                "data_rate": {
+                    "lora": {
+                        "bandwidth": 125000,
+                        "spreading_factor": 7,
+                        "coding_rate": "4/5"
+                    }
+                },
+                "frequency": "917400000",
+                "timestamp": 1262405326,
+                "time": "2025-02-06T02:38:53.505Z"
+            },
+            "received_at": "2025-02-06T02:39:02.746054304Z",
+            "consumed_airtime": "0.066816s",
+            "network_ids": {
+                "net_id": "000013",
+                "ns_id": "EC656E0000000183",
+                "tenant_id": "ttn",
+                "cluster_id": "au1",
+                "cluster_address": "au1.cloud.thethings.network"
+            }
+        }
+    },
+    {
+        "end_device_ids": {
+            "device_id": "em300-di",
+            "application_ids": {
+                "application_id": "daia-sensor-em300"
+            },
+            "dev_eui": "24E124136C482304",
+            "join_eui": "24E124C0002A0001",
+            "dev_addr": "260DA6E2"
+        },
+        "correlation_ids": [
+            "gs:uplink:01JKCJ971STG8S2W27JPHKMVWC"
+        ],
+        "received_at": "2025-02-06T02:44:02.952037918Z",
+        "uplink_message": {
+            "session_key_id": "AZTN7na5Ikz11RtlE7G4bg==",
+            "f_port": 85,
+            "f_cnt": 735,
+            "frm_payload": "AXVjA2fiAARoXQXIyggAAA==",
+            "decoded_payload": {
+                "battery": 99,
+                "humidity": 46.5,
+                "pulse": 2250,
+                "temperature": 22.6
+            },
+            "rx_metadata": [
+                {
+                    "gateway_ids": {
+                        "gateway_id": "daia-gateway",
+                        "eui": "24E124FFFEFAF7FD"
+                    },
+                    "time": "2025-02-06T02:43:53.508Z",
+                    "timestamp": 1562410599,
+                    "rssi": -91,
+                    "channel_rssi": -91,
+                    "snr": 9.2,
+                    "frequency_offset": "645",
+                    "location": {
+                        "latitude": -34.9861347413862,
+                        "longitude": -71.238780895348,
+                        "source": "SOURCE_REGISTRY"
+                    },
+                    "uplink_token": "ChoKGAoMZGFpYS1nYXRld2F5Eggk4ST//vr3/RDn/IHpBRoMCPLDkL0GEP+Zs+ICINiEt7e8qSsqDAjpw5C9BhCA7p3yAQ==",
+                    "gps_time": "2025-02-06T02:43:53.508Z",
+                    "received_at": "2025-02-06T02:44:02.573708653Z"
+                }
+            ],
+            "settings": {
+                "data_rate": {
+                    "lora": {
+                        "bandwidth": 125000,
+                        "spreading_factor": 7,
+                        "coding_rate": "4/5"
+                    }
+                },
+                "frequency": "916800000",
+                "timestamp": 1562410599,
+                "time": "2025-02-06T02:43:53.508Z"
+            },
+            "received_at": "2025-02-06T02:44:02.746795029Z",
+            "consumed_airtime": "0.066816s",
+            "network_ids": {
+                "net_id": "000013",
+                "ns_id": "EC656E0000000183",
+                "tenant_id": "ttn",
+                "cluster_id": "au1",
+                "cluster_address": "au1.cloud.thethings.network"
+            }
+        }
+    },
+    {
+        "end_device_ids": {
+            "device_id": "em300-di",
+            "application_ids": {
+                "application_id": "daia-sensor-em300"
+            },
+            "dev_eui": "24E124136C482304",
+            "join_eui": "24E124C0002A0001",
+            "dev_addr": "260DA6E2"
+        },
+        "correlation_ids": [
+            "gs:uplink:01JKCJJC0Y3EDEJJAHFJDEC7VZ"
+        ],
+        "received_at": "2025-02-06T02:49:02.957545740Z",
+        "uplink_message": {
+            "session_key_id": "AZTN7na5Ikz11RtlE7G4bg==",
+            "f_port": 85,
+            "f_cnt": 736,
+            "frm_payload": "AXVjA2fhAARoXgXIyggAAA==",
+            "decoded_payload": {
+                "battery": 99,
+                "humidity": 47,
+                "pulse": 2250,
+                "temperature": 22.5
+            },
+            "rx_metadata": [
+                {
+                    "gateway_ids": {
+                        "gateway_id": "daia-gateway",
+                        "eui": "24E124FFFEFAF7FD"
+                    },
+                    "time": "2025-02-06T02:48:53.504Z",
+                    "timestamp": 1862408230,
+                    "rssi": -88,
+                    "channel_rssi": -88,
+                    "snr": 10.2,
+                    "frequency_offset": "575",
+                    "location": {
+                        "latitude": -34.9861347413862,
+                        "longitude": -71.238780895348,
+                        "source": "SOURCE_REGISTRY"
+                    },
+                    "uplink_token": "ChoKGAoMZGFpYS1nYXRld2F5Eggk4ST//vr3/RCmsIj4BhoMCJ7GkL0GEP2NjuQCIPCouYGasisqDAiVxpC9BhCA3KnwAQ==",
+                    "channel_index": 6,
+                    "gps_time": "2025-02-06T02:48:53.504Z",
+                    "received_at": "2025-02-06T02:49:02.577295211Z"
+                }
+            ],
+            "settings": {
+                "data_rate": {
+                    "lora": {
+                        "bandwidth": 125000,
+                        "spreading_factor": 7,
+                        "coding_rate": "4/5"
+                    }
+                },
+                "frequency": "918000000",
+                "timestamp": 1862408230,
+                "time": "2025-02-06T02:48:53.504Z"
+            },
+            "received_at": "2025-02-06T02:49:02.751148981Z",
+            "consumed_airtime": "0.066816s",
+            "network_ids": {
+                "net_id": "000013",
+                "ns_id": "EC656E0000000183",
+                "tenant_id": "ttn",
+                "cluster_id": "au1",
+                "cluster_address": "au1.cloud.thethings.network"
+            }
+        }
+    },
+    {
+        "end_device_ids": {
+            "device_id": "em300-di",
+            "application_ids": {
+                "application_id": "daia-sensor-em300"
+            },
+            "dev_eui": "24E124136C482304",
+            "join_eui": "24E124C0002A0001",
+            "dev_addr": "260DA6E2"
+        },
+        "correlation_ids": [
+            "gs:uplink:01JKCJVGZBKCA2SMQQ9FC53GWT"
+        ],
+        "received_at": "2025-02-06T02:54:02.938818778Z",
+        "uplink_message": {
+            "session_key_id": "AZTN7na5Ikz11RtlE7G4bg==",
+            "f_port": 85,
+            "f_cnt": 737,
+            "frm_payload": "AXVjA2fiAARoXAXIzAgAAA==",
+            "decoded_payload": {
+                "battery": 99,
+                "humidity": 46,
+                "pulse": 2252,
+                "temperature": 22.6
+            },
+            "rx_metadata": [
+                {
+                    "gateway_ids": {
+                        "gateway_id": "daia-gateway",
+                        "eui": "24E124FFFEFAF7FD"
+                    },
+                    "time": "2025-02-06T02:53:53.489Z",
+                    "timestamp": 2162395633,
+                    "rssi": -98,
+                    "channel_rssi": -98,
+                    "snr": 5,
+                    "frequency_offset": "647",
+                    "location": {
+                        "latitude": -34.9861347413862,
+                        "longitude": -71.238780895348,
+                        "source": "SOURCE_REGISTRY"
+                    },
+                    "uplink_token": "ChoKGAoMZGFpYS1nYXRld2F5Eggk4ST//vr3/RDxk46HCBoMCMrIkL0GEJ7lz9sCIOiqy8b3uisqDAjByJC9BhDAmJbpAQ==",
+                    "channel_index": 3,
+                    "gps_time": "2025-02-06T02:53:53.489Z",
+                    "received_at": "2025-02-06T02:54:02.729019038Z"
+                }
+            ],
+            "settings": {
+                "data_rate": {
+                    "lora": {
+                        "bandwidth": 125000,
+                        "spreading_factor": 7,
+                        "coding_rate": "4/5"
+                    }
+                },
+                "frequency": "917400000",
+                "timestamp": 2162395633,
+                "time": "2025-02-06T02:53:53.489Z"
+            },
+            "received_at": "2025-02-06T02:54:02.732056689Z",
+            "consumed_airtime": "0.071936s",
+            "network_ids": {
+                "net_id": "000013",
+                "ns_id": "EC656E0000000183",
+                "tenant_id": "ttn",
+                "cluster_id": "au1",
+                "cluster_address": "au1.cloud.thethings.network"
+            }
+        }
+    },
+    {
+        "end_device_ids": {
+            "device_id": "em300-di",
+            "application_ids": {
+                "application_id": "daia-sensor-em300"
+            },
+            "dev_eui": "24E124136C482304",
+            "join_eui": "24E124C0002A0001",
+            "dev_addr": "260DA6E2"
+        },
+        "correlation_ids": [
+            "gs:uplink:01JKCK4NY4ARDJ7ZHH48SY0H0C"
+        ],
+        "received_at": "2025-02-06T02:59:02.931746209Z",
+        "uplink_message": {
+            "session_key_id": "AZTN7na5Ikz11RtlE7G4bg==",
+            "f_port": 85,
+            "f_cnt": 738,
+            "frm_payload": "AXVjA2fhAARoXgXIzAgAAA==",
+            "decoded_payload": {
+                "battery": 99,
+                "humidity": 47,
+                "pulse": 2252,
+                "temperature": 22.5
+            },
+            "rx_metadata": [
+                {
+                    "gateway_ids": {
+                        "gateway_id": "daia-gateway",
+                        "eui": "24E124FFFEFAF7FD"
+                    },
+                    "time": "2025-02-06T02:58:53.473Z",
+                    "timestamp": 2462382360,
+                    "rssi": -100,
+                    "channel_rssi": -100,
+                    "snr": 2.5,
+                    "frequency_offset": "630",
+                    "location": {
+                        "latitude": -34.9861347413862,
+                        "longitude": -71.238780895348,
+                        "source": "SOURCE_REGISTRY"
+                    },
+                    "uplink_token": "ChoKGAoMZGFpYS1nYXRld2F5Eggk4ST//vr3/RCY8pOWCRoMCPbKkL0GEK3wtNgCIMCLtIvVwysqDAjtypC9BhDA0MXhAQ==",
+                    "channel_index": 4,
+                    "gps_time": "2025-02-06T02:58:53.473Z",
+                    "received_at": "2025-02-06T02:59:02.555677699Z"
+                }
+            ],
+            "settings": {
+                "data_rate": {
+                    "lora": {
+                        "bandwidth": 125000,
+                        "spreading_factor": 7,
+                        "coding_rate": "4/5"
+                    }
+                },
+                "frequency": "917600000",
+                "timestamp": 2462382360,
+                "time": "2025-02-06T02:58:53.473Z"
+            },
+            "received_at": "2025-02-06T02:59:02.725568312Z",
+            "consumed_airtime": "0.066816s",
+            "network_ids": {
+                "net_id": "000013",
+                "ns_id": "EC656E0000000183",
+                "tenant_id": "ttn",
+                "cluster_id": "au1",
+                "cluster_address": "au1.cloud.thethings.network"
+            }
+        }
+    }
+]

@@ -1,0 +1,46 @@
+[
+    {
+        "DevUI": "24E124136C482304",
+        "battery": 99,
+        "humidity": 54,
+        "pulse": 1367,
+        "difference": 0,
+        "count": 0,
+        "temperature": 19.7,
+        "tiempo": "2025-01-30T12:01:59",
+        "rssi": -81
+    },
+    {
+        "DevUI": "24E124136C482304",
+        "battery": 99,
+        "humidity": 54.5,
+        "pulse": 1367,
+        "difference": 0,
+        "count": 0,
+        "temperature": 19.9,
+        "tiempo": "2025-01-30T12:06:59",
+        "rssi": -93
+    },
+    {
+        "DevUI": "24E124136C482304",
+        "battery": 99,
+        "humidity": 54,
+        "pulse": 1367,
+        "difference": 0,
+        "count": 0,
+        "temperature": 20,
+        "tiempo": "2025-01-30T12:11:59",
+        "rssi": -93
+    },
+    {
+        "DevUI": "24E124136C482304",
+        "battery": 99,
+        "humidity": 55,
+        "pulse": 1369,
+        "difference": 2,
+        "count": 1,
+        "temperature": 20,
+        "tiempo": "2025-01-30T12:16:59",
+        "rssi": -85
+    }
+]
