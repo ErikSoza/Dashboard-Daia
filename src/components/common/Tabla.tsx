@@ -45,7 +45,7 @@ export default function Tabla({ rows }: TablaProps) {
         sx={{ marginRight: 2 }}
       />
       <TextField
-        label="Filtrar por Tiempo (YYYY/MM/DD)"
+        label="Filtrar por Tiempo (DD/MM/YYYY)"
         variant="outlined"
         size="small"
         value={timeFilter}
