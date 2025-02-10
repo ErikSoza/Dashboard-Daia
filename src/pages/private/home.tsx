@@ -53,8 +53,8 @@ function Home() {
 
   return (
     <Layout>
-      <TableContainer component={Paper} sx={{ p: 2 }}>
-        <div style={{ textAlign: "center" }}>
+      <TableContainer component={Paper} sx={{ p: 2 }}> 
+        <div style={{ textAlign: "center" , display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center" }}>
           <Botones chartType={chartType} setChartType={setChartType} />
           <Grafico data={pulseData} type={chartType} />
         </div>

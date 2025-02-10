@@ -4,6 +4,7 @@ import { Data } from '../models/models';
 import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, LineElement, PointElement, ArcElement, Title, Tooltip, Legend } from 'chart.js';
 import { useState } from 'react';
 import { format } from 'date-fns';
+import Calendario from './common/Calendario.tsx';
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, LineElement, PointElement, ArcElement, Title, Tooltip, Legend);
 
@@ -61,27 +62,22 @@ const Grafico: React.FC<Props> = ({ data, type }) => {
 
   return (
     <div>
-      <div>
-        <button onClick={() => setFilterType("hora")}>Últimas 24 horas</button>
-        <button onClick={() => setFilterType("dia")}>Por día</button>
+      <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}> 
+        <div>
+          <Calendario selectedDate={selectedDate} setSelectedDate={setSelectedDate} />
+          <button onClick={() => setFilterType("hora")}>Conteo/Hora</button>
+          <button onClick={() => setFilterType("dia")}>Conteo/Dia</button>
+          <button onClick={() => setSelectedDate("")}>Limpiar Filtro</button>
+        </div>
 
-        {/* Selector de fecha nativo HTML */}
-        <input 
-          type="date" 
-          value={selectedDate} 
-          onChange={(e) => setSelectedDate(e.target.value)}
-        />
-        
-        <button onClick={() => setSelectedDate("")}>Limpiar Filtro</button>
+        {type === "Barra" ? (
+          <Bar data={chartData} />
+        ) : type === "Linea" ? (
+          <Line data={chartData} />
+        ) : (
+          <Doughnut data={chartData} />
+        )}
       </div>
-
-      {type === "Barra" ? (
-        <Bar data={chartData} />
-      ) : type === "Linea" ? (
-        <Line data={chartData} />
-      ) : (
-        <Doughnut data={chartData} />
-      )}
     </div>
   );
 };
