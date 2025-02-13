@@ -9,8 +9,11 @@ import Paper from "@mui/material/Paper";
 import TableContainer from "@mui/material/TableContainer";
 
 function Home() {
-  const pulseData = usePulseData();
+  const { pulseData, loading, error } = usePulseData();
   const [chartType, setChartType] = useState<"Barra" | "Linea" | "Dona">("Barra");
+
+  if (loading) return <p>Cargando datos...</p>;
+  if (error) return <p>Error: {error}</p>;
 
   return (
     <Layout>

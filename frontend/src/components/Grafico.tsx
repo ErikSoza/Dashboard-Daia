@@ -15,9 +15,9 @@ interface Props {
 }
 
 const Grafico: React.FC<Props> = ({ data, type }) => {
-  const [filterType, setFilterType] = useState<"hora" | "dia">("dia"); // "hora" | "dia" es una unión de tipos que acepta solo "hora" o "dia"
+  const [filterType, setFilterType] = useState<"hora" | "dia">("dia");
   const [selectedDate, setSelectedDate] = useState<string>("");
-  const [chartSize, setChartSize] = useState({ width: window.innerWidth * 0.7, height: window.innerHeight * 0.6 }); // window.innerWidth y window.innerHeight son las dimensiones del navegador
+  const [chartSize, setChartSize] = useState({ width: window.innerWidth * 0.7, height: window.innerHeight * 0.6 });
 
   useEffect(() => {
     const handleResize = () => {
@@ -25,35 +25,35 @@ const Grafico: React.FC<Props> = ({ data, type }) => {
     };
 
     window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize); // Este return es una función que se ejecuta cuando el componente se desmonta
+    return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  const sortedData: Data[] = [...data].sort((a, b) => a.time.getTime() - b.time.getTime()); 
+  const sortedData: Data[] = [...data].sort((a, b) => a.time.getTime() - b.time.getTime());
 
-  let filteredData = sortedData; 
+  let filteredData = sortedData;
   if (selectedDate) {
-    filteredData = sortedData.filter(d => format(d.time, "yyyy-MM-dd") === selectedDate); 
+    filteredData = sortedData.filter(d => format(d.time, "yyyy-MM-dd") === selectedDate);
   }
 
   let groupedData: { time: string; count: number }[] = [];
 
-  if (filterType === "hora") { // Si el filtro es por hora
+  if (filterType === "hora") {
     const hourlyMap = new Map<string, number>();
     filteredData.forEach((d) => {
-      const hour = format(d.time, "HH:00");
+      const hour = format(d.time, "yyyy-MM-dd HH");
       hourlyMap.set(hour, (hourlyMap.get(hour) || 0) + (d.count ?? 0));
     });
     groupedData = Array.from(hourlyMap.entries()).map(([time, count]) => ({ time, count }));
-  } else if (filterType === "dia") { // Si el filtro es por día
+  } else if (filterType === "dia") {
     const dailyMap = new Map<string, number>();
     filteredData.forEach((d) => {
       const day = format(d.time, "yyyy-MM-dd");
-      dailyMap.set(day, (dailyMap.get(day) || 0) + (d.count ?? 0));
+      dailyMap.set(day, (dailyMap.get(day) || 0) + (d.count ?? 0)); 
     });
-    groupedData = Array.from(dailyMap.entries()).map(([time, count]) => ({ time, count })); 
+    groupedData = Array.from(dailyMap.entries()).map(([time, count]) => ({ time, count }));
   }
 
-  const chartData = { // Este es el objeto de datos que se pasa al componente de gráfico
+  const chartData = {
     labels: groupedData.map(d => d.time),
     datasets: [{
       label: 'Count',
@@ -85,7 +85,7 @@ const Grafico: React.FC<Props> = ({ data, type }) => {
         <Calendario selectedDate={selectedDate} setSelectedDate={(date) => { setSelectedDate(date); setFilterType("hora"); }} />
         <Button onClick={() => { setSelectedDate(""); setFilterType("dia"); }}>Limpiar Filtro</Button>
       </div>
-    </div>    
+    </div>
   );
 };
 

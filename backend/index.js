@@ -1,9 +1,14 @@
 import express from 'express';
 import mysql from 'mysql2';
+import cors from 'cors';
 
-let db;
 const app = express();
+const PORT = 8800;
 
+// Habilitar CORS para permitir peticiones desde React
+app.use(cors());
+
+// Configuración de la base de datos
 const dbConfig = {
   host: 'localhost',
   user: 'root',
@@ -11,23 +16,21 @@ const dbConfig = {
   database: 'airflow_db'
 };
 
-//si tienes problema con la conexion de la base de datos usa
-//ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'password';
+let db;
 
+// Función para conectar a la base de datos con reconexión automática
 function connectDatabase() {
   db = mysql.createConnection(dbConfig);
 
-  // Intenta conectar a la base de datos
   db.connect(err => {
     if (err) {
-      console.error('❌ Error conectando a la base de datos:', err);
-      setTimeout(connectDatabase, 2000); // Intenta reconectar en 2 segundos
+      console.error('❌ Error conectando a MySQL:', err);
+      setTimeout(connectDatabase, 2000); // Reintentar en 2 segundos
     } else {
       console.log('✅ Conectado a MySQL');
     }
   });
 
-  // señala el tipo de error y reconecta si se pierde la conexión
   db.on('error', err => {
     console.error('⚠️ Error en la conexión de MySQL:', err);
     if (err.code === 'PROTOCOL_CONNECTION_LOST') {
@@ -38,20 +41,28 @@ function connectDatabase() {
   });
 }
 
-connectDatabase(); // Conectar a la base de datos
+connectDatabase(); // Conectar a MySQL al iniciar
 
+// Ruta principal de prueba
 app.get('/', (req, res) => {
   res.json({ message: 'Hola Mundo!' });
 });
 
+// Endpoint para obtener datos de la tabla `datos_json`
 app.get('/data', (req, res) => {
-  const q = 'SELECT id,json FROM datos_json';
+  const q = 'SELECT id, json FROM datos_json';
+
   db.query(q, (err, data) => {
-    if (err) return res.json({ error: err });
+    if (err) {
+      console.error('⚠️ Error en la consulta SQL:', err);
+      return res.status(500).json({ error: 'Error al obtener datos de MySQL' });
+    }
+
     return res.json({ data });
   });
 });
 
-app.listen(8800, () => {
-  console.log('🚀 Conectado al servidor!');
+// Iniciar el servidor en el puerto 8800
+app.listen(PORT, () => {
+  console.log(`🚀 Servidor corriendo en http://localhost:${PORT}`);
 });
