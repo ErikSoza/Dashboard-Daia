@@ -28,7 +28,13 @@ const Grafico: React.FC<Props> = ({ data, type }) => {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  const sortedData: Data[] = [...data].sort((a, b) => a.time.getTime() - b.time.getTime());
+  const validData = data.filter(d => d.time && !isNaN(new Date(d.time).getTime()));
+
+  console.log("Datos filtrados:", validData);
+  
+  const sortedData: Data[] = [...validData].sort(
+    (a, b) => new Date(a.time).getTime() - new Date(b.time).getTime()
+  );
 
   let filteredData = sortedData;
   if (selectedDate) {
