@@ -15,12 +15,11 @@ interface Props {
   threshold?: number;
 }
 
-const Grafico: React.FC<Props> = ({ data, type, threshold = 0 }) => { //threshold inicializado en 0 en caso de que no sea ingresado
-
+const Grafico: React.FC<Props> = ({ data, type, threshold = 0 }) => {
   const [filterType, setFilterType] = useState<"hora" | "dia">("dia");
   const [selectedDate, setSelectedDate] = useState<string>("");
   const [chartSize, setChartSize] = useState({ width: window.innerWidth * 0.7, height: window.innerHeight * 0.6 });
-  const [thresholdState, setThreshold] = useState<number>(threshold); // inicializa el threshold con el valor del prop
+  const [thresholdState, setThreshold] = useState<number>(threshold);
 
   useEffect(() => {
     const handleResize = () => {
@@ -61,12 +60,14 @@ const Grafico: React.FC<Props> = ({ data, type, threshold = 0 }) => { //threshol
     groupedData = Array.from(dailyMap.entries()).map(([time, count]) => ({ time, count }));
   }
 
+  const errores = groupedData.filter(d => d.count < thresholdState).length;
+  const normales = groupedData.filter(d => d.count >= thresholdState).length;
+
   const chartData = {
     labels: groupedData.map(d => d.time),
     datasets: [{
       label: 'Count',
       data: groupedData.map(d => d.count),
-      //cambia el color de la barra si el valor es menor al threshold
       backgroundColor: groupedData.map(d => d.count < thresholdState ? 'rgba(255, 99, 132, 0.2)' : 'rgba(75, 192, 192, 0.2)'),
       borderColor: groupedData.map(d => d.count < thresholdState ? 'rgba(255, 99, 132, 1)' : 'rgba(75, 192, 192, 1)'), 
       borderWidth: 1,
@@ -91,11 +92,11 @@ const Grafico: React.FC<Props> = ({ data, type, threshold = 0 }) => { //threshol
       </div>
       <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center'}}>
         Minimo de error
-        <input type="number" value={thresholdState} onChange={(e) => setThreshold(Number(e.target.value))} placeholder="Set threshold" disabled={threshold !== 0} // Desabhilita el input si se ingresa un valor al threshold
-        />
-
+        <input type="number" value={thresholdState} onChange={(e) => setThreshold(Number(e.target.value))} placeholder="Set threshold" disabled={threshold !== 0} />
+        Errores: {errores} - Valores correctos: {normales}
         <Calendario selectedDate={selectedDate} setSelectedDate={(date) => { setSelectedDate(date); setFilterType("hora"); }} />
         <Button onClick={() => { setSelectedDate(""); setFilterType("dia"); }}>Limpiar Filtro</Button>
+
       </div>
     </div>
   );
