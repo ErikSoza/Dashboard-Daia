@@ -42,7 +42,7 @@ function Home() {
                 <Draggable key={card.id} draggableId={card.id} index={index}>
                   {(provided) => (
                     <div ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}>
-                      <Card data={pulseData} chartType={card.chartType} title={card.title} />
+                      <Card data={pulseData} chartType={card.chartType} title={card.title} threshold={3} />
                     </div>
                   )}
                 </Draggable>

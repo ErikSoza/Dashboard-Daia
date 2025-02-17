@@ -12,12 +12,14 @@ ChartJS.register(CategoryScale, LinearScale, BarElement, LineElement, PointEleme
 interface Props {
   data: Data[];
   type: "Barra" | "Linea" | "Dona";
+  threshold?: number; // Optional prop for threshold
 }
 
-const Grafico: React.FC<Props> = ({ data, type }) => {
+const Grafico: React.FC<Props> = ({ data, type, threshold = 0 }) => { // Default value for threshold
   const [filterType, setFilterType] = useState<"hora" | "dia">("dia");
   const [selectedDate, setSelectedDate] = useState<string>("");
   const [chartSize, setChartSize] = useState({ width: window.innerWidth * 0.7, height: window.innerHeight * 0.6 });
+  const [thresholdState, setThreshold] = useState<number>(threshold); // Initialize state with prop value
 
   useEffect(() => {
     const handleResize = () => {
@@ -64,8 +66,8 @@ const Grafico: React.FC<Props> = ({ data, type }) => {
     datasets: [{
       label: 'Count',
       data: groupedData.map(d => d.count),
-      backgroundColor: 'rgba(75, 192, 192, 0.2)',
-      borderColor: 'rgba(75, 192, 192, 1)',
+      backgroundColor: groupedData.map(d => d.count < thresholdState ? 'rgba(255, 99, 132, 0.2)' : 'rgba(75, 192, 192, 0.2)'), // Change color based on threshold
+      borderColor: groupedData.map(d => d.count < thresholdState ? 'rgba(255, 99, 132, 1)' : 'rgba(75, 192, 192, 1)'), // Change color based on threshold
       borderWidth: 1,
     }]
   };
@@ -88,6 +90,10 @@ const Grafico: React.FC<Props> = ({ data, type }) => {
       </div>
 
       <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center'}}>
+        Minimo de error
+        <input type="number" value={thresholdState} onChange={(e) => setThreshold(Number(e.target.value))} 
+          placeholder="Set threshold" disabled={threshold !== 0} // Desabhilita el input si el threshold es 0
+        />
         <Calendario selectedDate={selectedDate} setSelectedDate={(date) => { setSelectedDate(date); setFilterType("hora"); }} />
         <Button onClick={() => { setSelectedDate(""); setFilterType("dia"); }}>Limpiar Filtro</Button>
       </div>
