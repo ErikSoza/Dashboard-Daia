@@ -12,14 +12,15 @@ ChartJS.register(CategoryScale, LinearScale, BarElement, LineElement, PointEleme
 interface Props {
   data: Data[];
   type: "Barra" | "Linea" | "Dona";
-  threshold?: number; // Optional prop for threshold
+  threshold?: number;
 }
 
-const Grafico: React.FC<Props> = ({ data, type, threshold = 0 }) => { // Default value for threshold
+const Grafico: React.FC<Props> = ({ data, type, threshold = 0 }) => { //threshold inicializado en 0 en caso de que no sea ingresado
+
   const [filterType, setFilterType] = useState<"hora" | "dia">("dia");
   const [selectedDate, setSelectedDate] = useState<string>("");
   const [chartSize, setChartSize] = useState({ width: window.innerWidth * 0.7, height: window.innerHeight * 0.6 });
-  const [thresholdState, setThreshold] = useState<number>(threshold); // Initialize state with prop value
+  const [thresholdState, setThreshold] = useState<number>(threshold); // inicializa el threshold con el valor del prop
 
   useEffect(() => {
     const handleResize = () => {
@@ -31,8 +32,6 @@ const Grafico: React.FC<Props> = ({ data, type, threshold = 0 }) => { // Default
   }, []);
 
   const validData = data.filter(d => d.time && !isNaN(new Date(d.time).getTime()));
-
-  console.log("Datos filtrados:", validData);
   
   const sortedData: Data[] = [...validData].sort(
     (a, b) => new Date(a.time).getTime() - new Date(b.time).getTime()
@@ -52,7 +51,8 @@ const Grafico: React.FC<Props> = ({ data, type, threshold = 0 }) => { // Default
       hourlyMap.set(hour, (hourlyMap.get(hour) || 0) + (d.count ?? 0));
     });
     groupedData = Array.from(hourlyMap.entries()).map(([time, count]) => ({ time, count }));
-  } else if (filterType === "dia") {
+  } 
+  else if (filterType === "dia") {
     const dailyMap = new Map<string, number>();
     filteredData.forEach((d) => {
       const day = format(d.time, "yyyy-MM-dd");
@@ -66,8 +66,9 @@ const Grafico: React.FC<Props> = ({ data, type, threshold = 0 }) => { // Default
     datasets: [{
       label: 'Count',
       data: groupedData.map(d => d.count),
-      backgroundColor: groupedData.map(d => d.count < thresholdState ? 'rgba(255, 99, 132, 0.2)' : 'rgba(75, 192, 192, 0.2)'), // Change color based on threshold
-      borderColor: groupedData.map(d => d.count < thresholdState ? 'rgba(255, 99, 132, 1)' : 'rgba(75, 192, 192, 1)'), // Change color based on threshold
+      //cambia el color de la barra si el valor es menor al threshold
+      backgroundColor: groupedData.map(d => d.count < thresholdState ? 'rgba(255, 99, 132, 0.2)' : 'rgba(75, 192, 192, 0.2)'),
+      borderColor: groupedData.map(d => d.count < thresholdState ? 'rgba(255, 99, 132, 1)' : 'rgba(75, 192, 192, 1)'), 
       borderWidth: 1,
     }]
   };
@@ -88,12 +89,11 @@ const Grafico: React.FC<Props> = ({ data, type, threshold = 0 }) => { // Default
           <Doughnut data={chartData} options={chartOptions} />
         )}
       </div>
-
       <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center'}}>
         Minimo de error
-        <input type="number" value={thresholdState} onChange={(e) => setThreshold(Number(e.target.value))} 
-          placeholder="Set threshold" disabled={threshold !== 0} // Desabhilita el input si el threshold es 0
+        <input type="number" value={thresholdState} onChange={(e) => setThreshold(Number(e.target.value))} placeholder="Set threshold" disabled={threshold !== 0} // Desabhilita el input si se ingresa un valor al threshold
         />
+
         <Calendario selectedDate={selectedDate} setSelectedDate={(date) => { setSelectedDate(date); setFilterType("hora"); }} />
         <Button onClick={() => { setSelectedDate(""); setFilterType("dia"); }}>Limpiar Filtro</Button>
       </div>
