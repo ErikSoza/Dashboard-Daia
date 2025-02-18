@@ -16,6 +16,7 @@ interface Props {
 }
 
 const Grafico: React.FC<Props> = ({ data, type, threshold = 0 }) => {
+  
   const [filterType, setFilterType] = useState<"hora" | "dia">("dia");
   const [selectedDate, setSelectedDate] = useState<string>("");
   const [selectedStartDate, setSelectedStartDate] = useState<string>("");
@@ -32,6 +33,12 @@ const Grafico: React.FC<Props> = ({ data, type, threshold = 0 }) => {
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
+
+  useEffect(() => {
+    if (selectedStartDate && selectedEndDate) {
+      setSelectedDate("");
+    }
+  }, [selectedStartDate, selectedEndDate]);
 
   const validData = data.filter(d => d.time && !isNaN(new Date(d.time).getTime()));
   
@@ -107,23 +114,18 @@ const Grafico: React.FC<Props> = ({ data, type, threshold = 0 }) => {
           <Bar data={chartData} options={chartOptions} />
         ) : type === "Linea" ? (
           <Line data={chartData} options={chartOptions} />
-        ) : (
+        ) : type === "Dona" ?(
           <Doughnut data={chartData} options={chartOptions} />
-        )}
+        ) : null}
       </div>
+
       <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', fontSize: '0.8em', gap: '0.5em' }}>
         <div>Minimo de error</div>
         <input type="number" value={thresholdState} onChange={(e) => setThreshold(Number(e.target.value))} placeholder="Set threshold" disabled={threshold !== 0} style={{ width: '80px' }} />
         <div>Valores correctos: {normales} - Fuera de turno: {fueraDeTurno}</div>
         <div>Errores: {errores}</div>
-        <Calendario
-          selectedStartDate={selectedStartDate}
-          setSelectedStartDate={setSelectedStartDate}
-          selectedEndDate={selectedEndDate}
-          setSelectedEndDate={setSelectedEndDate}
-          selectedDate={selectedDate}
-          setSelectedDate={(date) => { setSelectedDate(date); setFilterType("hora"); }}
-        />
+        <Calendario selectedStartDate={selectedStartDate} setSelectedStartDate={(date) => { setSelectedStartDate(date); setSelectedDate(""); setFilterType("dia"); }} selectedEndDate={selectedEndDate} setSelectedEndDate={(date) => { setSelectedEndDate(date); setSelectedDate(""); setFilterType("dia"); }} 
+        selectedDate={selectedDate} setSelectedDate={(date) => { setSelectedDate(date); setFilterType("hora"); }}/>
         <Button onClick={() => { setSelectedStartDate(""); setSelectedEndDate(""); setSelectedDate(""); setFilterType("dia"); }}>Limpiar Filtro</Button>
       </div>
     </div>

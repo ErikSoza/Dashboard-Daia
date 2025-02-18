@@ -1,8 +1,8 @@
 import * as React from 'react';
-import dayjs, { Dayjs } from 'dayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import dayjs from 'dayjs';
 
 interface SelectorFechaProps {
   label: string;
@@ -11,16 +11,17 @@ interface SelectorFechaProps {
 }
 
 const SelectorFecha: React.FC<SelectorFechaProps> = ({ label, selectedDate, setSelectedDate }) => {
-  const handleDateChange = (date: Dayjs | null) => {
-    setSelectedDate(date ? date.format('YYYY-MM-DD') : '');
-  };
-
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
       <DatePicker
         label={label}
         value={selectedDate ? dayjs(selectedDate) : null}
-        onChange={handleDateChange}
+        onChange={(date) => setSelectedDate(date ? date.format('YYYY-MM-DD') : '')}
+        slotProps={{
+          textField: {
+            sx: { width: '150px', '.MuiInputBase-input': { fontSize: '0.8em' }, '.MuiInputLabel-root': { fontSize: '0.8em' } }
+          }
+        }}
       />
     </LocalizationProvider>
   );
