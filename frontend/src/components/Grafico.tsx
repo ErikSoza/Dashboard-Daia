@@ -18,8 +18,11 @@ interface Props {
 const Grafico: React.FC<Props> = ({ data, type, threshold = 0 }) => {
   const [filterType, setFilterType] = useState<"hora" | "dia">("dia");
   const [selectedDate, setSelectedDate] = useState<string>("");
+  const [selectedStartDate, setSelectedStartDate] = useState<string>("");
+  const [selectedEndDate, setSelectedEndDate] = useState<string>("");
   const [chartSize, setChartSize] = useState({ width: window.innerWidth * 0.7, height: window.innerHeight * 0.6 });
   const [thresholdState, setThreshold] = useState<number>(threshold);
+  const [alertSignal, setAlertSignal] = useState<boolean>(false);
 
   useEffect(() => {
     const handleResize = () => {
@@ -36,14 +39,15 @@ const Grafico: React.FC<Props> = ({ data, type, threshold = 0 }) => {
     (a, b) => new Date(a.time).getTime() - new Date(b.time).getTime()
   );
 
-  console.log("Sorted data:", sortedData); // Log the sorted data
-
   let filteredData = sortedData;
   if (selectedDate) {
     filteredData = sortedData.filter(d => format(d.time, "yyyy-MM-dd") === selectedDate);
+  } else if (selectedStartDate && selectedEndDate) {
+    filteredData = sortedData.filter(d => {
+      const date = format(d.time, "yyyy-MM-dd");
+      return date >= selectedStartDate && date <= selectedEndDate;
+    });
   }
-
-  console.log("Filtered data:", filteredData); // Log the filtered data
 
   let groupedData: { time: string; count: number; fueraDeTurno: boolean }[] = [];
 
@@ -66,15 +70,16 @@ const Grafico: React.FC<Props> = ({ data, type, threshold = 0 }) => {
     groupedData = Array.from(dailyMap.entries()).map(([time, { count, fueraDeTurno }]) => ({ time, count, fueraDeTurno }));
   }
 
-  console.log("Grouped data:", groupedData); // Log the grouped data
-
   const errores = groupedData.filter(d => d.count < thresholdState && !d.fueraDeTurno).length;
   const normales = groupedData.filter(d => d.count >= thresholdState && !d.fueraDeTurno).length;
   const fueraDeTurno = groupedData.filter(d => d.fueraDeTurno).length;
 
   useEffect(() => {
     if (errores > 5) {
-      alert("Se detectaron más de 5 errores");
+      setAlertSignal(true);
+      alert("¡Se detectaron más de 5 errores!");
+    } else {
+      setAlertSignal(false);
     }
   }, [errores]);
 
@@ -96,6 +101,7 @@ const Grafico: React.FC<Props> = ({ data, type, threshold = 0 }) => {
 
   return (
     <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'center', width: '100%', height: '100%' }}>
+      {alertSignal && <div style={{ color: 'red', fontWeight: 'bold' }}>¡Se detectaron más de 5 errores!</div>}
       <div style={{ width: chartSize.width, height: chartSize.height }}>
         {type === "Barra" ? (
           <Bar data={chartData} options={chartOptions} />
@@ -110,8 +116,15 @@ const Grafico: React.FC<Props> = ({ data, type, threshold = 0 }) => {
         <input type="number" value={thresholdState} onChange={(e) => setThreshold(Number(e.target.value))} placeholder="Set threshold" disabled={threshold !== 0} style={{ width: '80px' }} />
         <div>Valores correctos: {normales} - Fuera de turno: {fueraDeTurno}</div>
         <div>Errores: {errores}</div>
-        <Calendario selectedDate={selectedDate} setSelectedDate={(date) => { setSelectedDate(date); setFilterType("hora"); }} />
-        <Button onClick={() => { setSelectedDate(""); setFilterType("dia"); }}>Limpiar Filtro</Button>
+        <Calendario
+          selectedStartDate={selectedStartDate}
+          setSelectedStartDate={setSelectedStartDate}
+          selectedEndDate={selectedEndDate}
+          setSelectedEndDate={setSelectedEndDate}
+          selectedDate={selectedDate}
+          setSelectedDate={(date) => { setSelectedDate(date); setFilterType("hora"); }}
+        />
+        <Button onClick={() => { setSelectedStartDate(""); setSelectedEndDate(""); setSelectedDate(""); setFilterType("dia"); }}>Limpiar Filtro</Button>
       </div>
     </div>
   );
