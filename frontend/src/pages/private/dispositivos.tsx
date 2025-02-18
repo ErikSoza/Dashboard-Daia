@@ -1,7 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Container, Typography, List, ListItemText, TextField, Button as MuiButton, ListItemButton } from '@mui/material';
-import Button from '../../components/common/Button.tsx';
+import {
+  Container,
+  Typography,
+  List,
+  ListItemText,
+  TextField,
+  Button,
+  ListItemButton,
+  Grid,
+  Paper
+} from '@mui/material';
 
 interface Dispositivo {
   dev_ui: number;
@@ -17,7 +26,6 @@ const Dispositivos: React.FC = () => {
   useEffect(() => {
     axios.get('http://localhost:8800/dispositivos')
       .then(response => {
-        console.log('Datos recibidos:', response.data);
         const data = response.data.data || response.data;
         setDispositivos(data);
       })
@@ -39,7 +47,7 @@ const Dispositivos: React.FC = () => {
     if (selectedDispositivo && newName.trim()) {
       setLoading(true);
       axios.put(`http://localhost:8800/dispositivos/${selectedDispositivo.dev_ui}`, { nombre: newName })
-        .then(response => {
+        .then(() => {
           setDispositivos(prev =>
             prev.map(d =>
               d.dev_ui === selectedDispositivo.dev_ui ? { ...d, nombre: newName } : d
@@ -58,45 +66,61 @@ const Dispositivos: React.FC = () => {
   };
 
   return (
-    <Container>
-      <Typography variant="h4" gutterBottom>
-        Dispositivos
+    <Container maxWidth="md" sx={{ py: 4 }}>
+      <Typography variant="h4" gutterBottom align="center">
+        Gestión de Dispositivos
       </Typography>
-      <List>
-        {dispositivos.map(dispositivo => (
-          <ListItemButton 
-            key={dispositivo.dev_ui} 
-            onClick={() => handleSelectDispositivo(dispositivo)}
-            selected={selectedDispositivo?.dev_ui === dispositivo.dev_ui}
-          >
-            <ListItemText primary={dispositivo.nombre} />
-          </ListItemButton>
-        ))}
-      </List>
-        {selectedDispositivo && (
-        <div>
-          <Typography variant="h6" gutterBottom>
-            Editar Nombre del Dispositivo
-          </Typography>
-          <TextField
-            label="Nuevo nombre"
-            value={newName}
-            onChange={handleNameChange}
-            fullWidth
-            margin="normal"
-          />
-          <MuiButton 
-            variant="contained" 
-            color="primary" 
-            onClick={handleUpdateName}
-            disabled={loading}
-          >
-            {loading ? <Button onClick={function (): void {
-                throw new Error('Function not implemented.');
-                    } } children={undefined}/> : "Actualizar"}
-          </MuiButton>
-        </div>
-      )}
+      <Grid container spacing={4}>
+        <Grid item xs={12} md={6}>
+          <Paper elevation={3} sx={{ p: 2 }}>
+            <Typography variant="h6" gutterBottom>
+              Lista de Dispositivos
+            </Typography>
+            <List>
+              {dispositivos.map(dispositivo => (
+                <ListItemButton key={dispositivo.dev_ui} onClick={() => handleSelectDispositivo(dispositivo)} selected={selectedDispositivo?.dev_ui === dispositivo.dev_ui}>
+                  <ListItemText 
+                    primary={dispositivo.nombre} 
+                    secondary={`ID: ${dispositivo.dev_ui}`}
+                  />
+                </ListItemButton>
+              ))}
+            </List>
+          </Paper>
+        </Grid>
+        <Grid item xs={12} md={6}>
+          <Paper elevation={3} sx={{ p: 2, minHeight: '200px' }}>
+            {selectedDispositivo ? (
+              <>
+                <Typography variant="h6" gutterBottom>
+                  Editar Dispositivo
+                </Typography>
+                <TextField
+                  label="Nuevo Nombre"
+                  value={newName}
+                  onChange={handleNameChange}
+                  fullWidth
+                  margin="normal"
+                />
+                <Button 
+                  variant="contained" 
+                  color="primary" 
+                  onClick={handleUpdateName}
+                  disabled={loading}
+                  fullWidth
+                  sx={{ mt: 2 }}
+                >
+                  {loading ? "Actualizando..." : "Actualizar Nombre"}
+                </Button>
+              </>
+            ) : (
+              <Typography variant="body1">
+                Selecciona un dispositivo de la lista para editar su nombre.
+              </Typography>
+            )}
+          </Paper>
+        </Grid>
+      </Grid>
     </Container>
   );
 };
