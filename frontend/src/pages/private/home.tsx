@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Card from "../../components/Card.tsx";
 import Grafico from "../../components/Grafico.tsx";
 import Tabla from "../../components/common/Tabla.tsx";
-import Layout from "../../components/common/layout.tsx";
+import AppBar from "../../components/common/AppBar.tsx";
 import Botones from "../../components/common/botones.tsx";
 import { usePulseData } from "../../hooks/usePulseData.tsx";
 import Paper from "@mui/material/Paper";
@@ -33,7 +33,11 @@ function Home() {
   if (error) return <p>Error: {error}</p>;
 
   return (
-    <Layout>
+    <AppBar>
+      <div style={{ textAlign: "center", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center" }}>
+        <Botones chartType={chartType} setChartType={setChartType} />
+        <Grafico data={pulseData} type={chartType} />
+      </div>
       <DragDropContext onDragEnd={onDragEnd}>
         <Droppable droppableId="cards-list">
           {(provided) => (
@@ -52,10 +56,6 @@ function Home() {
           )}
         </Droppable>
       </DragDropContext>
-      <div style={{ textAlign: "center", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center" }}>
-        <Botones chartType={chartType} setChartType={setChartType} />
-        <Grafico data={pulseData} type={chartType} />
-      </div>
       
       <TableContainer component={Paper} sx={{ p: 2 }}>
         <div style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center" }}>
@@ -64,7 +64,7 @@ function Home() {
         </div>
       </TableContainer>
 
-    </Layout>
+    </AppBar>
   );
 }
 
