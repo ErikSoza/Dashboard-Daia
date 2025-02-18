@@ -41,35 +41,44 @@ const Grafico: React.FC<Props> = ({ data, type, threshold = 0 }) => {
     filteredData = sortedData.filter(d => format(d.time, "yyyy-MM-dd") === selectedDate);
   }
 
-  let groupedData: { time: string; count: number }[] = [];
+  let groupedData: { time: string; count: number; fueraDeTurno: boolean }[] = [];
 
   if (filterType === "hora") {
-    const hourlyMap = new Map<string, number>();
+    const hourlyMap = new Map<string, { count: number; fueraDeTurno: boolean }>();
     filteredData.forEach((d) => {
       const hour = format(d.time, "yyyy-MM-dd HH");
-      hourlyMap.set(hour, (hourlyMap.get(hour) || 0) + (d.count ?? 0));
+      const currentCount = hourlyMap.get(hour)?.count || 0;
+      hourlyMap.set(hour, { count: currentCount + (d.count ?? 0), fueraDeTurno: currentCount + (d.count ?? 0) === 0 });
     });
-    groupedData = Array.from(hourlyMap.entries()).map(([time, count]) => ({ time, count }));
+    groupedData = Array.from(hourlyMap.entries()).map(([time, { count, fueraDeTurno }]) => ({ time, count, fueraDeTurno }));
   } 
   else if (filterType === "dia") {
-    const dailyMap = new Map<string, number>();
+    const dailyMap = new Map<string, { count: number; fueraDeTurno: boolean }>();
     filteredData.forEach((d) => {
       const day = format(d.time, "yyyy-MM-dd");
-      dailyMap.set(day, (dailyMap.get(day) || 0) + (d.count ?? 0)); 
+      const currentCount = dailyMap.get(day)?.count || 0;
+      dailyMap.set(day, { count: currentCount + (d.count ?? 0), fueraDeTurno: currentCount + (d.count ?? 0) === 0 });
     });
-    groupedData = Array.from(dailyMap.entries()).map(([time, count]) => ({ time, count }));
+    groupedData = Array.from(dailyMap.entries()).map(([time, { count, fueraDeTurno }]) => ({ time, count, fueraDeTurno }));
   }
 
-  const errores = groupedData.filter(d => d.count < thresholdState).length;
-  const normales = groupedData.filter(d => d.count >= thresholdState).length;
+  const errores = groupedData.filter(d => d.count < thresholdState && !d.fueraDeTurno).length;
+  const normales = groupedData.filter(d => d.count >= thresholdState && !d.fueraDeTurno).length;
+  const fueraDeTurno = groupedData.filter(d => d.fueraDeTurno).length;
+
+  useEffect(() => {
+    if (errores > 5) {
+      alert("Se detectaron más de 5 errores");
+    }
+  }, [errores]);
 
   const chartData = {
     labels: groupedData.map(d => d.time),
     datasets: [{
       label: 'Count',
       data: groupedData.map(d => d.count),
-      backgroundColor: groupedData.map(d => d.count < thresholdState ? 'rgba(255, 99, 132, 0.2)' : 'rgba(75, 192, 192, 0.2)'),
-      borderColor: groupedData.map(d => d.count < thresholdState ? 'rgba(255, 99, 132, 1)' : 'rgba(75, 192, 192, 1)'), 
+      backgroundColor: groupedData.map(d => d.fueraDeTurno ? 'rgba(255, 206, 86, 0.2)' : d.count < thresholdState ? 'rgba(255, 99, 132, 0.2)' : 'rgba(75, 192, 192, 0.2)'),
+      borderColor: groupedData.map(d => d.fueraDeTurno ? 'rgba(255, 206, 86, 1)' : d.count < thresholdState ? 'rgba(255, 99, 132, 1)' : 'rgba(75, 192, 192, 1)'), 
       borderWidth: 1,
     }]
   };
@@ -90,16 +99,16 @@ const Grafico: React.FC<Props> = ({ data, type, threshold = 0 }) => {
           <Doughnut data={chartData} options={chartOptions} />
         )}
       </div>
-      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center'}}>
-        Minimo de error
-        <input type="number" value={thresholdState} onChange={(e) => setThreshold(Number(e.target.value))} placeholder="Set threshold" disabled={threshold !== 0} />
-        Errores: {errores} - Valores correctos: {normales}
+      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', fontSize: '0.8em', gap: '0.5em' }}>
+        <div>Minimo de error</div>
+        <input type="number" value={thresholdState} onChange={(e) => setThreshold(Number(e.target.value))} placeholder="Set threshold" disabled={threshold !== 0} style={{ width: '80px' }} />
+        <div>Valores correctos: {normales} - Fuera de turno: {fueraDeTurno}</div>
+        <div>Errores: {errores}</div>
         <Calendario selectedDate={selectedDate} setSelectedDate={(date) => { setSelectedDate(date); setFilterType("hora"); }} />
         <Button onClick={() => { setSelectedDate(""); setFilterType("dia"); }}>Limpiar Filtro</Button>
-
       </div>
     </div>
   );
 };
-
+  
 export default Grafico;
