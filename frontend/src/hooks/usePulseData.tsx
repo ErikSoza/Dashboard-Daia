@@ -13,6 +13,8 @@ export const usePulseData = () => {
         const response = await axios.get("http://localhost:8800/data"); // URL del backend
         const jsonData = response.data.data; // Extraer la propiedad data del objeto
 
+        console.log("Fetched data:", jsonData); // Log the fetched data
+
         let lastPulse = 0;
         const extractedData = jsonData.flatMap((entry: any) => {
           const jsonContentArray = JSON.parse(entry.json);
@@ -31,14 +33,16 @@ export const usePulseData = () => {
               battery: uplink_message.decoded_payload.battery ?? "N/A",
               humidity: uplink_message.decoded_payload.humidity ?? "N/A",
               temperature: uplink_message.decoded_payload.temperature ?? "N/A",
-              time: uplink_message.rx_metadata?.[0]?.time
-                ? new Date(uplink_message.rx_metadata[0].time)
-                : "Fecha desconocida",
+              time: uplink_message.received_at 
+              ? new Date(uplink_message.received_at) 
+              : "Fecha desconocida",
               difference,
               count: difference !== 0 ? 1 : 0, // Mismo conteo de pulsos por hora
             };
           });
         });
+
+        console.log("Extracted data:", extractedData); // Log the extracted data
 
         setPulseData(extractedData); // Actualizar el estado con los datos extraídos
       } catch (error) {

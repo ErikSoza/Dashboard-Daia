@@ -1,8 +1,8 @@
-const APU_URL = 'http://localhost:8800';
+const API_URL = 'http://localhost:8800';
 
 export const fetchData = async () => {
     try {
-        const response = await fetch('${API_URL}/data');
+        const response = await fetch(`${API_URL}/data`);
         if (!response.ok) {
             throw new Error('Error al obtener los datos');
         }

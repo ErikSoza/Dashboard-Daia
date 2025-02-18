@@ -36,10 +36,14 @@ const Grafico: React.FC<Props> = ({ data, type, threshold = 0 }) => {
     (a, b) => new Date(a.time).getTime() - new Date(b.time).getTime()
   );
 
+  console.log("Sorted data:", sortedData); // Log the sorted data
+
   let filteredData = sortedData;
   if (selectedDate) {
     filteredData = sortedData.filter(d => format(d.time, "yyyy-MM-dd") === selectedDate);
   }
+
+  console.log("Filtered data:", filteredData); // Log the filtered data
 
   let groupedData: { time: string; count: number; fueraDeTurno: boolean }[] = [];
 
@@ -61,6 +65,8 @@ const Grafico: React.FC<Props> = ({ data, type, threshold = 0 }) => {
     });
     groupedData = Array.from(dailyMap.entries()).map(([time, { count, fueraDeTurno }]) => ({ time, count, fueraDeTurno }));
   }
+
+  console.log("Grouped data:", groupedData); // Log the grouped data
 
   const errores = groupedData.filter(d => d.count < thresholdState && !d.fueraDeTurno).length;
   const normales = groupedData.filter(d => d.count >= thresholdState && !d.fueraDeTurno).length;
