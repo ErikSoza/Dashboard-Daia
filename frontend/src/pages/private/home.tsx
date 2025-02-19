@@ -1,11 +1,8 @@
 import React, { useState } from "react";
 import Card from "../../components/Card.tsx";
-//import Grafico from "../../components/Grafico.tsx";
 import AppBar from "../../components/common/AppBar.tsx";
-//import Botones from "../../components/common/botones.tsx";
 import { DragDropContext, Droppable, Draggable, DropResult } from "@hello-pangea/dnd";
 import Grid from "@mui/material/Grid";
-//import { Box } from "@mui/material";
 
 interface CardItem {
   id: string;
@@ -35,8 +32,6 @@ function Home() {
       ],
     },
   });
-
-  //const [chartType, setChartType] = useState<"Barra" | "Linea" | "Dona">("Barra");
 
   // Manejo del drag and drop
   const onDragEnd = (result: DropResult) => {
@@ -80,19 +75,6 @@ function Home() {
 
   return (
     <AppBar>
-    {/*
-      <Box
-        sx={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          flexDirection: "column",
-        }}
-      >
-        <Botones chartType={chartType} setChartType={setChartType} />
-        <Grafico type={chartType} />
-      </Box>
-          */}
       <DragDropContext onDragEnd={onDragEnd}>
         <Grid container>
           {Object.entries(columns).map(([columnId, column]) => (
