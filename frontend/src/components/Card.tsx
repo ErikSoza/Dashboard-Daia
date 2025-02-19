@@ -40,7 +40,7 @@ const OutlinedCard: React.FC<CardProps> = ({chartType, title, threshold }) => {
           </div>
           {expanded && (
             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
-              <Grafico type={chartTypeState} threshold={threshold} filterType="hora" selectedDate={today} /> {/* Pass filterType as "hora" and selectedDate as today */}
+              <Grafico type={chartTypeState} threshold={threshold} filterType="hora" selectedDate={today} showControls={false} /> {/* Pass filterType as "hora" and selectedDate as today */}
             </div>
           )}
         </CardContent>

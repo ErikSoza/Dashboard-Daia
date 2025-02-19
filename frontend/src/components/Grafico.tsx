@@ -15,9 +15,10 @@ interface Props {
   threshold?: number;
   filterType?: "hora" | "dia"; // Add filterType prop
   selectedDate?: string; // Add selectedDate prop
+  showControls?: boolean; // Add showControls prop
 }
 
-const Grafico: React.FC<Props> = ({ type, threshold = 0, filterType: initialFilterType = "dia", selectedDate: initialSelectedDate = "" }) => {
+const Grafico: React.FC<Props> = ({ type, threshold = 0, filterType: initialFilterType = "dia", selectedDate: initialSelectedDate = "", showControls = true }) => {
   const { pulseData, loading, error } = usePulseData();
 
   const [selectedDate, setSelectedDate] = useState<string>(initialSelectedDate);
@@ -126,15 +127,17 @@ const Grafico: React.FC<Props> = ({ type, threshold = 0, filterType: initialFilt
         ) : null}
       </div>
 
-      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', fontSize: '0.8em', gap: '0.5em' }}>
-        <div>Minimo de error</div>
-        <input type="number" value={thresholdState} onChange={(e) => setThreshold(Number(e.target.value))} placeholder="Set threshold" disabled={threshold !== 0} style={{ width: '80px' }} />
-        <div>Valores correctos: {normales} - Fuera de turno: {fueraDeTurno}</div>
-        <div>Errores: {errores}</div>
-        <Calendario selectedStartDate={selectedStartDate} setSelectedStartDate={(date) => { setSelectedStartDate(date); setSelectedDate(""); setFilterType("dia"); }} selectedEndDate={selectedEndDate} setSelectedEndDate={(date) => { setSelectedEndDate(date); setSelectedDate(""); setFilterType("dia"); }} 
-        selectedDate={selectedDate} setSelectedDate={(date) => { setSelectedDate(date); setFilterType("hora"); }}/>
-        <Button onClick={() => { setSelectedStartDate(""); setSelectedEndDate(""); setSelectedDate(""); setFilterType("dia"); }}>Limpiar Filtro</Button>
-      </div>
+      {showControls && (
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', fontSize: '0.8em', gap: '0.5em' }}>
+          <div>Minimo de error</div>
+          <input type="number" value={thresholdState} onChange={(e) => setThreshold(Number(e.target.value))} placeholder="Set threshold" disabled={threshold !== 0} style={{ width: '80px' }} />
+          <div>Valores correctos: {normales} - Fuera de turno: {fueraDeTurno}</div>
+          <div>Errores: {errores}</div>
+          <Calendario selectedStartDate={selectedStartDate} setSelectedStartDate={(date) => { setSelectedStartDate(date); setSelectedDate(""); setFilterType("dia"); }} selectedEndDate={selectedEndDate} setSelectedEndDate={(date) => { setSelectedEndDate(date); setSelectedDate(""); setFilterType("dia"); }} 
+          selectedDate={selectedDate} setSelectedDate={(date) => { setSelectedDate(date); setFilterType("hora"); }}/>
+          <Button onClick={() => { setSelectedStartDate(""); setSelectedEndDate(""); setSelectedDate(""); setFilterType("dia"); }}>Limpiar Filtro</Button>
+        </div>
+      )}
     </div>
   );
 };
