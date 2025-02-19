@@ -1,16 +1,14 @@
 import React, { useState } from "react";
 import Card from "../../components/Card.tsx";
 import Grafico from "../../components/Grafico.tsx";
-import Tabla from "../../components/common/Tabla.tsx";
+//import Tabla from "../../components/common/Tabla.tsx";
 import AppBar from "../../components/common/AppBar.tsx";
 import Botones from "../../components/common/botones.tsx";
-import { usePulseData } from "../../hooks/usePulseData.tsx";
-import Paper from "@mui/material/Paper";
-import TableContainer from "@mui/material/TableContainer";
+//import Paper from "@mui/material/Paper";
+//import TableContainer from "@mui/material/TableContainer";
 import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd";
 
 function Home() {
-  const { pulseData, loading, error } = usePulseData();
   const [chartType, setChartType] = useState<"Barra" | "Linea" | "Dona">("Barra");
 
   const [cards, setCards] = useState<{ id: string; chartType: "Barra" | "Linea" | "Dona"; title: string; }[]>([
@@ -29,14 +27,11 @@ function Home() {
     setCards(reorderedCards);
   };
 
-  if (loading) return <p>Cargando datos...</p>;
-  if (error) return <p>Error: {error}</p>;
-
   return (
     <AppBar>
       <div style={{ textAlign: "center", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center" }}>
         <Botones chartType={chartType} setChartType={setChartType} />
-        <Grafico data={pulseData} type={chartType} />
+        <Grafico type={chartType} />
       </div>
       <DragDropContext onDragEnd={onDragEnd}>
         <Droppable droppableId="cards-list">
@@ -46,7 +41,7 @@ function Home() {
                 <Draggable key={card.id} draggableId={card.id} index={index}>
                   {(provided) => (
                     <div ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}>
-                      <Card data={pulseData} chartType={card.chartType} title={card.title} threshold={5} />
+                      <Card chartType={card.chartType} title={card.title} threshold={5} data={[]} />
                     </div>
                   )}
                 </Draggable>
@@ -56,14 +51,6 @@ function Home() {
           )}
         </Droppable>
       </DragDropContext>
-      
-      <TableContainer component={Paper} sx={{ p: 2 }}>
-        <div style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center" }}>
-          <h4>Tabla de Datos</h4>
-          <Tabla rows={pulseData} />
-        </div>
-      </TableContainer>
-
     </AppBar>
   );
 }

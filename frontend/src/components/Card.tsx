@@ -16,7 +16,7 @@ interface CardProps {
   threshold: number; // New prop for threshold
 }
 
-const OutlinedCard: React.FC<CardProps> = ({ data, chartType, title, threshold }) => {
+const OutlinedCard: React.FC<CardProps> = ({chartType, title, threshold }) => {
   const [chartTypeState] = useState<"Barra" | "Linea" | "Dona">(chartType);
   const [expanded, setExpanded] = useState(false);
 
@@ -38,7 +38,7 @@ const OutlinedCard: React.FC<CardProps> = ({ data, chartType, title, threshold }
           </div>
           {expanded && (
             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
-              <Grafico data={data} type={chartTypeState} threshold={threshold} /> {/* Pass threshold to Grafico */}
+              <Grafico type={chartTypeState} threshold={threshold} /> {/* Pass threshold to Grafico */}
             </div>
           )}
         </CardContent>

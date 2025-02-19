@@ -6,17 +6,18 @@ import { useState, useEffect } from 'react';
 import { Line, Bar, Doughnut } from 'react-chartjs-2';
 import Calendario from './common/Calendario.tsx';
 import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, LineElement, PointElement, ArcElement, Title, Tooltip, Legend } from 'chart.js';
+import { usePulseData } from "../hooks/usePulseData.tsx";
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, LineElement, PointElement, ArcElement, Title, Tooltip, Legend);
 
 interface Props {
-  data: Data[];
   type: "Barra" | "Linea" | "Dona";
   threshold?: number;
 }
 
-const Grafico: React.FC<Props> = ({ data, type, threshold = 0 }) => {
-  
+const Grafico: React.FC<Props> = ({ type, threshold = 0 }) => {
+  const { pulseData, loading, error } = usePulseData();
+
   const [filterType, setFilterType] = useState<"hora" | "dia">("dia");
   const [selectedDate, setSelectedDate] = useState<string>("");
   const [selectedStartDate, setSelectedStartDate] = useState<string>("");
@@ -24,6 +25,12 @@ const Grafico: React.FC<Props> = ({ data, type, threshold = 0 }) => {
   const [chartSize, setChartSize] = useState({ width: window.innerWidth * 0.7, height: window.innerHeight * 0.6 });
   const [thresholdState, setThreshold] = useState<number>(threshold);
   const [alertSignal, setAlertSignal] = useState<boolean>(false);
+  
+  let groupedData: { time: string; count: number; fueraDeTurno: boolean }[] = [];
+  
+  const errores = groupedData.filter(d => d.count < thresholdState && !d.fueraDeTurno).length;
+  const normales = groupedData.filter(d => d.count >= thresholdState && !d.fueraDeTurno).length;
+  const fueraDeTurno = groupedData.filter(d => d.fueraDeTurno).length;
 
   useEffect(() => {
     const handleResize = () => {
@@ -40,7 +47,19 @@ const Grafico: React.FC<Props> = ({ data, type, threshold = 0 }) => {
     }
   }, [selectedStartDate, selectedEndDate]);
 
-  const validData = data.filter(d => d.time && !isNaN(new Date(d.time).getTime()));
+  useEffect(() => {
+    if (errores > 5) {
+      setAlertSignal(true);
+      alert("¡Se detectaron más de 5 errores!");
+    } else {
+      setAlertSignal(false);
+    }
+  }, [errores]);
+
+  if (loading) return <p>Cargando datos...</p>;
+  if (error) return <p>Error: {error}</p>;
+
+  const validData = pulseData.filter(d => d.time && !isNaN(new Date(d.time).getTime()));
   
   const sortedData: Data[] = [...validData].sort(
     (a, b) => new Date(a.time).getTime() - new Date(b.time).getTime()
@@ -55,8 +74,6 @@ const Grafico: React.FC<Props> = ({ data, type, threshold = 0 }) => {
       return date >= selectedStartDate && date <= selectedEndDate;
     });
   }
-
-  let groupedData: { time: string; count: number; fueraDeTurno: boolean }[] = [];
 
   if (filterType === "hora") {
     const hourlyMap = new Map<string, { count: number; fueraDeTurno: boolean }>();
@@ -77,18 +94,6 @@ const Grafico: React.FC<Props> = ({ data, type, threshold = 0 }) => {
     groupedData = Array.from(dailyMap.entries()).map(([time, { count, fueraDeTurno }]) => ({ time, count, fueraDeTurno }));
   }
 
-  const errores = groupedData.filter(d => d.count < thresholdState && !d.fueraDeTurno).length;
-  const normales = groupedData.filter(d => d.count >= thresholdState && !d.fueraDeTurno).length;
-  const fueraDeTurno = groupedData.filter(d => d.fueraDeTurno).length;
-
-  useEffect(() => {
-    if (errores > 5) {
-      setAlertSignal(true);
-      alert("¡Se detectaron más de 5 errores!");
-    } else {
-      setAlertSignal(false);
-    }
-  }, [errores]);
 
   const chartData = {
     labels: groupedData.map(d => d.time),
