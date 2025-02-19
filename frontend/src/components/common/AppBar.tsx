@@ -12,7 +12,7 @@ const drawerWidth =240;
 //navItems es un arreglo de objetos con dos propiedades: label y path que sirven para crear los items del menú y redirigir a las rutas correspondientes
 const navItems: { label: string; path: string }[] = [ 
   { label: 'Home', path: '/home' },
-  { label: 'Dispositivos', path: '/dispositivos' },
+  { label: 'Dispositivos', path: '/device' },
   { label: 'Salir', path: '/' }
 ];
 

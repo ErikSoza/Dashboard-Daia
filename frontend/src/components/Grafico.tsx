@@ -13,9 +13,9 @@ ChartJS.register(CategoryScale, LinearScale, BarElement, LineElement, PointEleme
 interface Props {
   type: "Barra" | "Linea" | "Dona";
   threshold?: number;
-  filterType?: "hora" | "dia"; // Add filterType prop
-  selectedDate?: string; // Add selectedDate prop
-  showControls?: boolean; // Add showControls prop
+  filterType?: "hora" | "dia"; 
+  selectedDate?: string; 
+  showControls?: boolean; 
 }
 
 const Grafico: React.FC<Props> = ({ type, threshold = 0, filterType: initialFilterType = "dia", selectedDate: initialSelectedDate = "", showControls = true }) => {

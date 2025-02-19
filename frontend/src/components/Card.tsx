@@ -8,6 +8,8 @@ import Grafico from './Grafico.tsx';
 import { Data } from '../models/models';
 import IconButton from '@mui/material/IconButton';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import Button from './common/Button.tsx';
+import { useNavigate } from 'react-router-dom';
 
 interface CardProps {
   data: Data[];
@@ -19,6 +21,7 @@ interface CardProps {
 const OutlinedCard: React.FC<CardProps> = ({chartType, title, threshold }) => {
   const [chartTypeState] = useState<"Barra" | "Linea" | "Dona">(chartType);
   const [expanded, setExpanded] = useState(false);
+  const navigate = useNavigate();
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
@@ -41,6 +44,7 @@ const OutlinedCard: React.FC<CardProps> = ({chartType, title, threshold }) => {
           {expanded && (
             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
               <Grafico type={chartTypeState} threshold={threshold} filterType="hora" selectedDate={today} showControls={false} /> {/* Pass filterType as "hora" and selectedDate as today */}
+              <Button onClick={() => navigate('/analytics')}>Más detalles</Button>
             </div>
           )}
         </CardContent>
