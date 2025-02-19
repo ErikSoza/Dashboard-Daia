@@ -81,7 +81,7 @@ const Grafico: React.FC<Props> = ({ type, threshold = 0, filterType: initialFilt
   if (filterType === "hora") {
     const hourlyMap = new Map<string, { count: number; fueraDeTurno: boolean }>();
     filteredData.forEach((d) => {
-      const hour = format(d.time, "yyyy-MM-dd HH");
+      const hour = format(d.time, "HH:00");
       const currentCount = hourlyMap.get(hour)?.count || 0;
       hourlyMap.set(hour, { count: currentCount + (d.count ?? 0), fueraDeTurno: currentCount + (d.count ?? 0) === 0 });
     });
@@ -133,7 +133,8 @@ const Grafico: React.FC<Props> = ({ type, threshold = 0, filterType: initialFilt
           <input type="number" value={thresholdState} onChange={(e) => setThreshold(Number(e.target.value))} placeholder="Set threshold" disabled={threshold !== 0} style={{ width: '80px' }} />
           <div>Valores correctos: {normales} - Fuera de turno: {fueraDeTurno}</div>
           <div>Errores: {errores}</div>
-          <Calendario selectedStartDate={selectedStartDate} setSelectedStartDate={(date) => { setSelectedStartDate(date); setSelectedDate(""); setFilterType("dia"); }} selectedEndDate={selectedEndDate} setSelectedEndDate={(date) => { setSelectedEndDate(date); setSelectedDate(""); setFilterType("dia"); }} 
+          <Calendario selectedStartDate={selectedStartDate} setSelectedStartDate={(date) => { setSelectedStartDate(date); setSelectedDate(""); setFilterType("dia"); }} 
+          selectedEndDate={selectedEndDate} setSelectedEndDate={(date) => { setSelectedEndDate(date); setSelectedDate(""); setFilterType("dia"); }} 
           selectedDate={selectedDate} setSelectedDate={(date) => { setSelectedDate(date); setFilterType("hora"); }}/>
           <Button onClick={() => { setSelectedStartDate(""); setSelectedEndDate(""); setSelectedDate(""); setFilterType("dia"); }}>Limpiar Filtro</Button>
         </div>

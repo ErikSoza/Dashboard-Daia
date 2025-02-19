@@ -3,7 +3,8 @@ import React from "react";
 
 import Login from "../pages/public/login.tsx";
 import Home from "../pages/private/home.tsx";
-import Dispositivos from "../pages/private/dispositivos.tsx";
+import Device from "../pages/private/device.tsx";
+import Analytics from "../pages/private/Graphic/analytics.tsx";
 
 const router = createBrowserRouter([
     {
@@ -15,8 +16,12 @@ const router = createBrowserRouter([
         element: <Home />
     },
     {
-        path: "/dispositivos",
-        element: <Dispositivos />
+        path: "/device",
+        element: <Device />
+    },
+    {
+        path: "/analytics",
+        element: <Analytics />
     }
 ])
 
