@@ -5,31 +5,10 @@ import Button from './common/Button.tsx';
 import { useState, useEffect } from 'react';
 import { Line, Bar, Doughnut } from 'react-chartjs-2';
 import Calendario from './common/Calendario.tsx';
-import {
-  Chart as ChartJS,
-  CategoryScale,
-  LinearScale,
-  BarElement,
-  LineElement,
-  PointElement,
-  ArcElement,
-  Title,
-  Tooltip,
-  Legend,
-} from 'chart.js';
+import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, LineElement, PointElement, ArcElement, Title, Tooltip, Legend,} from 'chart.js';
 import { usePulseData } from "../hooks/usePulseData.tsx";
 
-ChartJS.register(
-  CategoryScale,
-  LinearScale,
-  BarElement,
-  LineElement,
-  PointElement,
-  ArcElement,
-  Title,
-  Tooltip,
-  Legend
-);
+ChartJS.register( CategoryScale, LinearScale, BarElement, LineElement, PointElement, ArcElement, Title, Tooltip, Legend);
 
 interface Props {
   type: "Barra" | "Linea" | "Dona";
@@ -37,8 +16,7 @@ interface Props {
   filterType?: "hora" | "dia"; 
   selectedDate?: string; 
   showControls?: boolean; 
-  /** Si se especifica, se mostrará el gráfico únicamente para ese dispositivo */
-  devUI?: string;
+  devUI?: string; //Si se especifica, se mostrará el gráfico únicamente para ese dispositivo
 }
 
 const Grafico: React.FC<Props> = ({
@@ -64,13 +42,11 @@ const Grafico: React.FC<Props> = ({
   const [chartSize, setChartSize] = useState({ width: window.innerWidth * 0.7, height: window.innerHeight * 0.6 });
   const [thresholdState, setThreshold] = useState<number>(threshold);
   const [alertSignal, setAlertSignal] = useState<boolean>(false);
+  const [errores, setErrores] = useState<number>(0);
+  const [normales, setNormales] = useState<number>(0);
+  const [fueraDeTurno, setFueraDeTurno] = useState<number>(0);
 
   let groupedData: { time: string; count: number; fueraDeTurno: boolean }[] = [];
-
-  // Se calcula con base a los datos agrupados
-  const errores = groupedData.filter(d => d.count < thresholdState && !d.fueraDeTurno).length;
-  const normales = groupedData.filter(d => d.count >= thresholdState && !d.fueraDeTurno).length;
-  const fueraDeTurno = groupedData.filter(d => d.fueraDeTurno).length;
 
   useEffect(() => {
     const handleResize = () => {
@@ -88,13 +64,21 @@ const Grafico: React.FC<Props> = ({
   }, [selectedStartDate, selectedEndDate]);
 
   useEffect(() => {
-    if (errores > 5) {
+    const erroresCount = groupedData.filter(d => d.count < thresholdState && !d.fueraDeTurno).length;
+    const normalesCount = groupedData.filter(d => d.count >= thresholdState && !d.fueraDeTurno).length;
+    const fueraDeTurnoCount = groupedData.filter(d => d.fueraDeTurno).length;
+
+    setErrores(erroresCount);
+    setNormales(normalesCount);
+    setFueraDeTurno(fueraDeTurnoCount);
+
+    if (erroresCount > 5) {
       setAlertSignal(true);
       alert("¡Se detectaron más de 5 errores!");
     } else {
       setAlertSignal(false);
     }
-  }, [errores]);
+  }, [groupedData, thresholdState]);
 
   if (loading) return <p>Cargando datos...</p>;
   if (error) return <p>Error: {error}</p>;
