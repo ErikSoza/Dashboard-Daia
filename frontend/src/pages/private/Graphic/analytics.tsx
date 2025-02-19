@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import Grafico from "../../../components/Grafico.tsx";
 import AppBar from "../../../components/common/AppBar.tsx";
 import { Box } from "@mui/material";
