@@ -1,17 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import AppBar from '../../components/common/AppBar.tsx';
 import axios from 'axios';
-import {
-  Container,
-  Typography,
-  List,
-  ListItemText,
-  TextField,
-  Button,
-  ListItemButton,
-  Grid,
-  Paper
-} from '@mui/material';
+import {Container,Typography, List, ListItemText, TextField, Button, ListItemButton, Grid, Paper} from '@mui/material';
 
 interface Dispositivo {
   dev_ui: number;
@@ -20,14 +10,14 @@ interface Dispositivo {
 
 const Dispositivos: React.FC = () => {
   const [dispositivos, setDispositivos] = useState<Dispositivo[]>([]);
-  const [selectedDispositivo, setSelectedDispositivo] = useState<Dispositivo | null>(null);
-  const [newName, setNewName] = useState<string>("");
+  const [seleccionarDispositivo, setSeleccionarDispositivo] = useState<Dispositivo | null>(null);
+  const [nuevoNombre, setNuevoNombre] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
 
   useEffect(() => {
     axios.get('http://localhost:8800/dispositivos')
       .then(response => {
-        const data = response.data.data || response.data;
+        const data = response.data.data || response.data; 
         setDispositivos(data);
       })
       .catch(error => {
@@ -36,26 +26,26 @@ const Dispositivos: React.FC = () => {
   }, []);
 
   const handleSelectDispositivo = (dispositivo: Dispositivo) => {
-    setSelectedDispositivo(prev => (prev?.dev_ui === dispositivo.dev_ui ? null : dispositivo));
-    setNewName(dispositivo.nombre);
+    setSeleccionarDispositivo(prev => (prev?.dev_ui === dispositivo.dev_ui ? null : dispositivo));
+    setNuevoNombre(dispositivo.nombre);
   };
 
   const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setNewName(e.target.value);
+    setNuevoNombre(e.target.value);
   };
 
-  const handleUpdateName = () => {
-    if (selectedDispositivo && newName.trim()) {
+  const handleActualizarNombre = () => {
+    if (seleccionarDispositivo && nuevoNombre.trim()) {
       setLoading(true);
-      axios.put(`http://localhost:8800/dispositivos/${selectedDispositivo.dev_ui}`, { nombre: newName })
+      axios.put(`http://localhost:8800/dispositivos/${seleccionarDispositivo.dev_ui}`, { nombre: nuevoNombre })
         .then(() => {
           setDispositivos(prev =>
             prev.map(d =>
-              d.dev_ui === selectedDispositivo.dev_ui ? { ...d, nombre: newName } : d
+              d.dev_ui === seleccionarDispositivo.dev_ui ? { ...d, nombre: nuevoNombre } : d
             )
           );
-          setSelectedDispositivo({ ...selectedDispositivo, nombre: newName });
-          setNewName("");
+          setSeleccionarDispositivo({ ...seleccionarDispositivo, nombre: nuevoNombre });
+          setNuevoNombre("");
         })
         .catch(error => {
           console.error('Error updating dispositivo name:', error);
@@ -80,7 +70,7 @@ const Dispositivos: React.FC = () => {
                     </Typography>
                     <List>
                     {dispositivos.map(dispositivo => (
-                        <ListItemButton key={dispositivo.dev_ui} onClick={() => handleSelectDispositivo(dispositivo)} selected={selectedDispositivo?.dev_ui === dispositivo.dev_ui}>
+                        <ListItemButton key={dispositivo.dev_ui} onClick={() => handleSelectDispositivo(dispositivo)} selected={seleccionarDispositivo?.dev_ui === dispositivo.dev_ui}>
                         <ListItemText 
                             primary={dispositivo.nombre} 
                             secondary={`ID: ${dispositivo.dev_ui}`}
@@ -92,14 +82,14 @@ const Dispositivos: React.FC = () => {
                 </Grid>
                 <Grid item xs={12} md={6}>
                 <Paper elevation={3} sx={{ p: 2, minHeight: '200px' }}>
-                    {selectedDispositivo ? (
+                    {seleccionarDispositivo ? (
                     <>
                         <Typography variant="h6" gutterBottom>
                         Editar Dispositivo
                         </Typography>
                         <TextField
                         label="Nuevo Nombre"
-                        value={newName}
+                        value={nuevoNombre}
                         onChange={handleNameChange}
                         fullWidth
                         margin="normal"
@@ -107,7 +97,7 @@ const Dispositivos: React.FC = () => {
                         <Button 
                         variant="contained" 
                         color="primary" 
-                        onClick={handleUpdateName}
+                        onClick={handleActualizarNombre}
                         disabled={loading}
                         fullWidth
                         sx={{ mt: 2 }}

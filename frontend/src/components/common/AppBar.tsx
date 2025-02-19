@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {  AppBar,  Box,  CssBaseline,  Divider,  Drawer,  IconButton,  List,  ListItem,  ListItemButton,  ListItemText,  Toolbar,  Typography,  Button} from '@mui/material';
+import {AppBar, Box, CssBaseline, Divider, Drawer, IconButton, List, ListItem, ListItemButton, ListItemText, Toolbar, Typography, Button} from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import { useNavigate } from 'react-router-dom';
 
@@ -8,48 +8,38 @@ interface Props {
   children: React.ReactNode;
 }
 
-const drawerWidth = 240;
-const navItems = ['Home', 'Dispositivos', 'Salir'];
+const drawerWidth =240;
+//navItems es un arreglo de objetos con dos propiedades: label y path que sirven para crear los items del menú y redirigir a las rutas correspondientes
+const navItems: { label: string; path: string }[] = [ 
+  { label: 'Home', path: '/home' },
+  { label: 'Dispositivos', path: '/dispositivos' },
+  { label: 'Salir', path: '/' }
+];
 
-export default function ResponsiveDrawerAppBar(props: Props) {
-  const { window, children } = props;
-  const [mobileOpen, setMobileOpen] = React.useState(false);
+export default function ResponsiveDrawerAppBar({ window, children }: Props) {
+  const [mobileOpen, setMobileOpen] = React.useState(false); //mobileOpen es un estado que se utiliza para abrir y cerrar el menú en dispositivos móviles
   const navigate = useNavigate();
 
-  const handleDrawerToggle = () => {
-    setMobileOpen((prev) => !prev);
-  };
-
-  const handleNavigation = (path: string) => {
-    navigate(path);
-  };
+  const handleDrawerToggle = () => setMobileOpen((prev) => !prev);
+  const handleNavigation = (path: string) => navigate(path);
 
   const drawer = (
     <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center' }}>
       <Typography variant="h6" sx={{ my: 2 }}>
-        Dashboard
+        Dashboard Daia
       </Typography>
       <Divider />
       <List>
-        {navItems.map((item) => (
-          <ListItem key={item} disablePadding>
-            <ListItemButton
-              sx={{ textAlign: 'center' }}
-              onClick={() => {
-                if (item === 'Dispositivos') handleNavigation('/dispositivos');
-                else if (item === 'Home') handleNavigation('/home');
-                else if (item === 'Salir') handleNavigation('/');
-              }}
-            >
-              <ListItemText primary={item} />
+        {navItems.map(({ label, path }) => ( //Se mapea el arreglo navItems para crear los items del menú
+          <ListItem key={label} disablePadding>
+            <ListItemButton sx={{ textAlign: 'center' }} onClick={() => handleNavigation(path)}>
+              <ListItemText primary={label} />
             </ListItemButton>
           </ListItem>
         ))}
       </List>
     </Box>
   );
-
-  const container = window !== undefined ? window().document.body : undefined;
 
   return (
     <Box sx={{ display: 'flex' }}>
@@ -65,25 +55,13 @@ export default function ResponsiveDrawerAppBar(props: Props) {
           >
             <MenuIcon />
           </IconButton>
-          <Typography
-            variant="h6"
-            component="div"
-            sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}
-          >
+          <Typography variant="h6" sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}>
             Dashboard
           </Typography>
           <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
-            {navItems.map((item) => (
-              <Button
-                key={item}
-                sx={{ color: '#fff' }}
-                onClick={() => {
-                  if (item === 'Dispositivos') handleNavigation('/dispositivos');
-                  else if (item === 'Home') handleNavigation('/home');
-                  else if (item === 'Salir') handleNavigation('/');
-                }}
-              >
-                {item}
+            {navItems.map(({ label, path }) => (
+              <Button key={label} sx={{ color: '#fff' }} onClick={() => handleNavigation(path)}>
+                {label}
               </Button>
             ))}
           </Box>
@@ -91,13 +69,11 @@ export default function ResponsiveDrawerAppBar(props: Props) {
       </AppBar>
       <Box component="nav">
         <Drawer
-          container={container}
+          container={window !== undefined ? () => window().document.body : undefined}
           variant="temporary"
           open={mobileOpen}
           onClose={handleDrawerToggle}
-          ModalProps={{
-            keepMounted: true
-          }}
+          ModalProps={{ keepMounted: true }}
           sx={{
             display: { xs: 'block', sm: 'none' },
             '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth }
