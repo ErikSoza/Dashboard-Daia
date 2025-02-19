@@ -24,6 +24,8 @@ const OutlinedCard: React.FC<CardProps> = ({chartType, title, threshold }) => {
     setExpanded(!expanded);
   };
 
+  //const today = new Date().toISOString().split('T')[0]; // Get today's date in YYYY-MM-DD format
+  const today = "2025-02-08"; // Hardcoded date for testing
   return (
     <Box sx={{ minWidth: 275, margin: '20px' }}>
       <Card variant="outlined" sx={{ boxShadow: 3 }}>
@@ -38,7 +40,7 @@ const OutlinedCard: React.FC<CardProps> = ({chartType, title, threshold }) => {
           </div>
           {expanded && (
             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
-              <Grafico type={chartTypeState} threshold={threshold} /> {/* Pass threshold to Grafico */}
+              <Grafico type={chartTypeState} threshold={threshold} filterType="hora" selectedDate={today} /> {/* Pass filterType as "hora" and selectedDate as today */}
             </div>
           )}
         </CardContent>

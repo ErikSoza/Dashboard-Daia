@@ -13,13 +13,15 @@ ChartJS.register(CategoryScale, LinearScale, BarElement, LineElement, PointEleme
 interface Props {
   type: "Barra" | "Linea" | "Dona";
   threshold?: number;
+  filterType?: "hora" | "dia"; // Add filterType prop
+  selectedDate?: string; // Add selectedDate prop
 }
 
-const Grafico: React.FC<Props> = ({ type, threshold = 0 }) => {
+const Grafico: React.FC<Props> = ({ type, threshold = 0, filterType: initialFilterType = "dia", selectedDate: initialSelectedDate = "" }) => {
   const { pulseData, loading, error } = usePulseData();
 
-  const [filterType, setFilterType] = useState<"hora" | "dia">("dia");
-  const [selectedDate, setSelectedDate] = useState<string>("");
+  const [selectedDate, setSelectedDate] = useState<string>(initialSelectedDate);
+  const [filterType, setFilterType] = useState<"hora" | "dia">(initialFilterType);
   const [selectedStartDate, setSelectedStartDate] = useState<string>("");
   const [selectedEndDate, setSelectedEndDate] = useState<string>("");
   const [chartSize, setChartSize] = useState({ width: window.innerWidth * 0.7, height: window.innerHeight * 0.6 });
