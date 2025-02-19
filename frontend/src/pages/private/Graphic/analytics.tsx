@@ -18,7 +18,7 @@ return (
                 flexDirection: "column",
             }}
         >
-            <Grafico type={chartTypeState} />
+            <Grafico type={chartTypeState} devUI="24E124136C482304" />
         </Box>
     </AppBar>
 );
