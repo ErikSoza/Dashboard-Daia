@@ -1,13 +1,12 @@
 import React from 'react';
 
 export interface Data {
-    id: number;
     pulse: number;
     DevUI: string;
     battery: number;
     humidity: number;
     temperature: number;
-    time: Date;
+    time: Date | string;
     difference?: number;
     count?: number;
 }
