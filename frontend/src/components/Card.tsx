@@ -34,7 +34,7 @@ const OutlinedCard: React.FC<CardProps> = ({chartType, title, threshold, devUI }
             </Typography>
           </div>
             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
-              <Grafico type={chartTypeState} threshold={threshold} filterType="hora" selectedDate={today} showControls={false} /> 
+              <Grafico type={chartTypeState} threshold={threshold} filterType="hora" selectedDate={today} showControls={false} devUI={devUI} /> 
                 <Button onClick={() => navigate(`/analytics/${chartTypeState}/${devUI}`, { state: { chartType: chartTypeState, devUI, threshold, title } })}>Más detalles</Button>
             </div>
         </CardContent>
