@@ -124,16 +124,14 @@ const Grafico: React.FC<Props> = ({
     datasets: [{
       label: 'Count',
       data: groupedData.map(d => d.count),
-      backgroundColor: groupedData.map(d =>
-        d.fueraDeTurno
-          ? 'rgba(255, 206, 86, 0.2)'
+      backgroundColor: groupedData.map(d => d.fueraDeTurno
+          ? 'rgba(75, 192, 192, 0.2)'
           : d.count < thresholdState
             ? 'rgba(255, 99, 132, 0.2)'
             : 'rgba(75, 192, 192, 0.2)'
       ),
-      borderColor: groupedData.map(d =>
-        d.fueraDeTurno
-          ? 'rgba(255, 206, 86, 1)'
+      borderColor: groupedData.map(d =>d.fueraDeTurno
+          ? 'rgba(75, 192, 192, 1)'
           : d.count < thresholdState
             ? 'rgba(255, 99, 132, 1)'
             : 'rgba(75, 192, 192, 1)'

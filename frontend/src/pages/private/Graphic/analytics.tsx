@@ -1,14 +1,13 @@
 import React from "react";
 import Grafico from "../../../components/Grafico.tsx";
 import AppBar from "../../../components/common/AppBar.tsx";
-import { Box } from "@mui/material";
-import { useParams } from "react-router-dom";
+import { Box, Typography } from "@mui/material";
+import { useLocation } from "react-router-dom";
 
 function Analytics() {
-const { chartType } = useParams<{ chartType: "Barra" | "Linea" | "Dona" }>();
-const chartTypeState = chartType || "Barra";
-const { devUI } = useParams();
-
+    const location = useLocation();
+    const { chartType, devUI, threshold, title } = location.state || {};
+    
 return (
     <AppBar>
         <Box
@@ -19,7 +18,10 @@ return (
                 flexDirection: "column",
             }}
         >
-            <Grafico type={chartTypeState} devUI={devUI} />
+            <Typography gutterBottom sx={{ color: 'text.secondary', fontSize: 14 }}>
+              <h1>{title}</h1>
+            </Typography>
+            <Grafico type={chartType} devUI={devUI} threshold={threshold}/>
         </Box>
     </AppBar>
 );

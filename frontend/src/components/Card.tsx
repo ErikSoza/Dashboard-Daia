@@ -6,8 +6,6 @@ import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import Grafico from './Grafico.tsx';
 import { Data } from '../models/models';
-//import IconButton from '@mui/material/IconButton';
-//import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import Button from './common/Button.tsx';
 import { useNavigate } from 'react-router-dom';
 
@@ -21,11 +19,10 @@ interface CardProps {
 
 const OutlinedCard: React.FC<CardProps> = ({chartType, title, threshold, devUI }) => {
   const [chartTypeState] = useState<"Barra" | "Linea" | "Dona">(chartType);
-  //const [expanded, setExpanded] = useState(false);
   const navigate = useNavigate();
 
-  //const today = new Date().toISOString().split('T')[0]; // Get today's date in YYYY-MM-DD format
-  const today = "2025-02-08"; // Hardcoded date for testing
+  const today = new Date().toISOString().split('T')[0];
+  //const today = "2025-02-08"; //ejemplo en caso de que no hayan datos en la base de datos
   
   return (
     <Box sx={{ minWidth: 275, margin: '20px' }}>
@@ -33,12 +30,12 @@ const OutlinedCard: React.FC<CardProps> = ({chartType, title, threshold, devUI }
         <CardContent>
           <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
             <Typography gutterBottom sx={{ color: 'text.secondary', fontSize: 14 }}>
-              {title}
+              {title} {today}
             </Typography>
           </div>
             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
-              <Grafico type={chartTypeState} threshold={threshold} filterType="hora" selectedDate={today} showControls={false} /> {/* Pass filterType as "hora" and selectedDate as today */}
-              <Button onClick={() => navigate(`/analytics/${chartTypeState}/${devUI}`)}>Más detalles</Button>
+              <Grafico type={chartTypeState} threshold={threshold} filterType="hora" selectedDate={today} showControls={false} /> 
+                <Button onClick={() => navigate(`/analytics/${chartTypeState}/${devUI}`, { state: { chartType: chartTypeState, devUI, threshold, title } })}>Más detalles</Button>
             </div>
         </CardContent>
       </Card>
