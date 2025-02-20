@@ -20,7 +20,7 @@ const router = createBrowserRouter([
         element: <Device />
     },
     {
-        path: "/analytics/:chartType",
+        path: "/analytics/:chartTypeState/:devUI",
         element: <Analytics />
     }
 ])

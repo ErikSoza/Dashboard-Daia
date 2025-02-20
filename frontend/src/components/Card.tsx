@@ -16,9 +16,10 @@ interface CardProps {
   chartType: "Barra" | "Linea" | "Dona";
   title: string;
   threshold: number;
+  devUI: string;
 }
 
-const OutlinedCard: React.FC<CardProps> = ({chartType, title, threshold }) => {
+const OutlinedCard: React.FC<CardProps> = ({chartType, title, threshold, devUI }) => {
   const [chartTypeState] = useState<"Barra" | "Linea" | "Dona">(chartType);
   //const [expanded, setExpanded] = useState(false);
   const navigate = useNavigate();
@@ -37,7 +38,7 @@ const OutlinedCard: React.FC<CardProps> = ({chartType, title, threshold }) => {
           </div>
             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
               <Grafico type={chartTypeState} threshold={threshold} filterType="hora" selectedDate={today} showControls={false} /> {/* Pass filterType as "hora" and selectedDate as today */}
-              <Button onClick={() => navigate(`/analytics/${chartTypeState}`)}>Más detalles</Button>
+              <Button onClick={() => navigate(`/analytics/${chartTypeState}/${devUI}`)}>Más detalles</Button>
             </div>
         </CardContent>
       </Card>

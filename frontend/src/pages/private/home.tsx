@@ -102,7 +102,7 @@ function Home() {
                               ...provided.draggableProps.style,
                             }}
                           >
-                            <Card chartType={card.chartType} title={card.title} threshold={5} data={[]}/>
+                            <Card chartType={card.chartType} title={card.title} threshold={5} data={[]} devUI="24E124136C482304"/>
                           </div>
                         )}
                       </Draggable>
