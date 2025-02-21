@@ -31,8 +31,8 @@ function Home() {
 
         // Generar gráficos para cada devUI
         const allCards: CardItem[] = devices.flatMap((device, index) => [
-          { id: `${device.dev_ui}-linea`, chartType: "Linea", title: `Línea - ${device.nombre}`, devUI: device.dev_ui },
           { id: `${device.dev_ui}-barra`, chartType: "Barra", title: `Barra - ${device.nombre}`, devUI: device.dev_ui },
+          { id: `${device.dev_ui}-linea`, chartType: "Linea", title: `Línea - ${device.nombre}`, devUI: device.dev_ui },
           { id: `${device.dev_ui}-dona`, chartType: "Dona", title: `Dona - ${device.nombre}`, devUI: device.dev_ui },
         ]);
 

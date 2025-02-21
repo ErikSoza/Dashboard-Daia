@@ -46,11 +46,6 @@ const Grafico: React.FC<Props> = ({
 
   let groupedData: { time: string; count: number; fueraDeTurno: boolean }[] = [];
 
-  // Se calcula con base a los datos agrupados
-  const errores = groupedData.filter(d => d.count < thresholdState && !d.fueraDeTurno).length;
-  const normales = groupedData.filter(d => d.count >= thresholdState && !d.fueraDeTurno).length;
-  const fueraDeTurno = groupedData.filter(d => d.fueraDeTurno).length;
-
   useEffect(() => {
     const handleResize = () => {
       setChartSize({ width: window.innerWidth * 0.7, height: window.innerHeight * 0.6 });
@@ -66,21 +61,10 @@ const Grafico: React.FC<Props> = ({
     }
   }, [selectedStartDate, selectedEndDate]);
 
-  useEffect(() => {
-    if (errores > 5) {
-      setAlertSignal(true);
-      alert("¡Se detectaron más de 5 errores!");
-    } else {
-      setAlertSignal(false);
-    }
-  }, [errores]);
-
-  if (loading) return <p>Cargando datos...</p>;
-  if (error) return <p>Error: {error}</p>;
-
+  
   // Filtrar datos válidos (que tengan una fecha correcta)
   const validData = sensorData.filter(d => d.time && !isNaN(new Date(d.time).getTime()));
-
+  
   // Ordenamos los datos por fecha
   const sortedData: Data[] = [...validData].sort(
     (a, b) => new Date(a.time).getTime() - new Date(b.time).getTime()
@@ -96,7 +80,7 @@ const Grafico: React.FC<Props> = ({
       return date >= selectedStartDate && date <= selectedEndDate;
     });
   }
-
+  
   // Agrupamos la información según el filtro (por hora o por día)
   if (filterType === "hora") {
     const hourlyMap = new Map<string, { count: number; fueraDeTurno: boolean }>();
@@ -117,8 +101,30 @@ const Grafico: React.FC<Props> = ({
     });
     groupedData = Array.from(dailyMap.entries()).map(([time, { count, fueraDeTurno }]) => ({ time, count, fueraDeTurno }));
   }
+  
+  // Se calcula con base a los datos agrupados
+  const errores = groupedData.filter(d => d.count < thresholdState && !d.fueraDeTurno).length;
+  const normales = groupedData.filter(d => d.count >= thresholdState && !d.fueraDeTurno).length;
+  const fueraDeTurno = groupedData.filter(d => d.fueraDeTurno).length;
+  
+  // Calcular porcentajes para el gráfico de dona
+  const totalCounts = errores + normales + fueraDeTurno;
+  const errorPercentage = totalCounts > 0 ? (errores / totalCounts) * 100 : 0;
+  const normalPercentage = totalCounts > 0 ? (normales / totalCounts) * 100 : 0;
+  const fueraDeTurnoPercentage = totalCounts > 0 ? (fueraDeTurno / totalCounts) * 100 : 0;
+  
+  useEffect(() => {
+    if (errores > 5) {
+      setAlertSignal(true);
+      alert("¡Se detectaron más de 5 errores!");
+    } else {
+      setAlertSignal(false);
+    }
+  }, [errores]);
 
-  // Configuración de los datos para el gráfico
+  if (loading) return <p>Cargando datos...</p>;
+  if (error) return <p>Error: {error}</p>;
+
   const chartData = {
     labels: groupedData.map(d => d.time),
     datasets: [{
@@ -136,6 +142,17 @@ const Grafico: React.FC<Props> = ({
             ? 'rgba(255, 99, 132, 1)'
             : 'rgba(75, 192, 192, 1)'
       ),
+      borderWidth: 1,
+    }]
+  };
+
+  // Configuración de los datos para el gráfico de dona
+  const doughnutData = {
+    labels: ['Errores', 'Normales', 'Fuera de turno'],
+    datasets: [{
+      data: [errorPercentage, normalPercentage, fueraDeTurnoPercentage],
+      backgroundColor: ['rgba(255, 99, 132, 0.2)', 'rgba(75, 192, 192, 0.2)', 'rgba(255, 205, 86, 0.2)'],
+      borderColor: ['rgba(255, 99, 132, 1)', 'rgba(75, 192, 192, 1)', 'rgba(255, 205, 86, 1)'],
       borderWidth: 1,
     }]
   };
@@ -167,7 +184,7 @@ const Grafico: React.FC<Props> = ({
         ) : type === "Linea" ? (
           <Line data={chartData} options={chartOptions} />
         ) : type === "Dona" ? (
-          <Doughnut data={chartData} options={chartOptions} />
+          <Doughnut data={doughnutData} options={chartOptions} />
         ) : null}
       </div>
 
