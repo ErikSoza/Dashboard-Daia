@@ -131,16 +131,16 @@ const Grafico: React.FC<Props> = ({
       label: 'Count',
       data: groupedData.map(d => d.count),
       backgroundColor: groupedData.map(d => d.fueraDeTurno
-          ? 'rgba(75, 192, 192, 0.2)'
+          ? 'rgba(255, 205, 86, 0.2)' // Fuera de turno
           : d.count < thresholdState
-            ? 'rgba(255, 99, 132, 0.2)'
-            : 'rgba(75, 192, 192, 0.2)'
+            ? 'rgba(255, 99, 132, 0.2)' // Error
+            : 'rgba(75, 192, 192, 0.2)' // Normal
       ),
-      borderColor: groupedData.map(d =>d.fueraDeTurno
-          ? 'rgba(75, 192, 192, 1)'
+      borderColor: groupedData.map(d => d.fueraDeTurno
+          ? 'rgba(255, 205, 86, 1)' // Fuera de turno
           : d.count < thresholdState
-            ? 'rgba(255, 99, 132, 1)'
-            : 'rgba(75, 192, 192, 1)'
+            ? 'rgba(255, 99, 132, 1)' // Error
+            : 'rgba(75, 192, 192, 1)' // Normal
       ),
       borderWidth: 1,
     }]
