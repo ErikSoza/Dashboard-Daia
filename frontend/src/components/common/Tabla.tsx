@@ -46,8 +46,8 @@ const PulseDataTable = ({ devUI }) => {
 
   const filteredRows = rows.filter((row) => {
     if (!filterDate) return true;
-    const rowDate = new Date(row.time).toLocaleDateString();
-    return rowDate === new Date(filterDate).toLocaleDateString();
+    const rowDate = new Date(row.time).toLocaleDateString('en-CA'); // 'en-CA' for YYYY-MM-DD format
+    return rowDate === filterDate;
   });
 
   return (
