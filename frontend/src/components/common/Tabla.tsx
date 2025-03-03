@@ -1,83 +1,88 @@
-import * as React from 'react';
-import Paper from '@mui/material/Paper';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TablePagination from '@mui/material/TablePagination';
-import TableRow from '@mui/material/TableRow';
-import TextField from '@mui/material/TextField';
-import { Data } from '../../models/models';
+import React, { useState } from "react";
+import Paper from "@mui/material/Paper";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableContainer from "@mui/material/TableContainer";
+import TableHead from "@mui/material/TableHead";
+import TablePagination from "@mui/material/TablePagination";
+import TableRow from "@mui/material/TableRow";
+import TextField from "@mui/material/TextField";
+import { usePulseData } from "../../hooks/usePulseData.tsx";
 
-interface TablaProps {
-  rows: Data[];
-}
+const columns = [
+  { id: "time", label: "Tiempo", minWidth: 170 },
+  { id: "pulse", label: "Pulso", minWidth: 100 },
+  { id: "battery", label: "Bateria", minWidth: 100 },
+  { id: "humidity", label: "Humedad", minWidth: 100 },
+  { id: "temperature", label: "Temperatura", minWidth: 100 },
+  { id: "difference", label: "Diferencia", minWidth: 100 },
+  { id: "count", label: "Count", minWidth: 100 },
+];
 
-export default function Tabla({ rows }: TablaProps) {
+const PulseDataTable = ({ devUI }) => {
+  const { pulseData, loading, error } = usePulseData();
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
-  const [devUIFilter, setDevUIFilter] = React.useState('');
-  const [timeFilter, setTimeFilter] = React.useState('');
+  const [filterDate, setFilterDate] = useState("");
 
-  const handleChangePage = (event: unknown, newPage: number) => {
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>{error}</p>;
+
+  const rows = pulseData[devUI] || [];
+
+  const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
 
-  const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChangeRowsPerPage = (event) => {
     setRowsPerPage(+event.target.value);
     setPage(0);
   };
 
-  const filteredRows = rows.filter(row => 
-    (devUIFilter === '' || row.DevUI.includes(devUIFilter)) &&
-    (timeFilter === '' || row.time.toLocaleString().includes(timeFilter))
-  );
+  const handleFilterChange = (event) => {
+    setFilterDate(event.target.value);
+  };
+
+  const filteredRows = rows.filter((row) => {
+    if (!filterDate) return true;
+    const rowDate = new Date(row.time).toLocaleDateString('en-CA'); // 'en-CA' for YYYY-MM-DD format
+    return rowDate === filterDate;
+  });
 
   return (
-    <Paper sx={{ width: '100%', overflow: 'hidden', padding: 2 }}>
+    <Paper sx={{ width: "100%", overflow: "hidden" }}>
       <TextField
-        label="Filtrar por DevUI"
-        variant="outlined"
-        size="small"
-        value={devUIFilter}
-        onChange={(e) => setDevUIFilter(e.target.value)}
-        sx={{ marginRight: 2 }}
+        label="Filtrar por fecha"
+        type="date"
+        value={filterDate}
+        onChange={handleFilterChange}
+        InputLabelProps={{
+          shrink: true,
+        }}
+        sx={{ marginBottom: 2 }}
       />
-      <TextField
-        label="Filtrar por Tiempo (DD/MM/YYYY)"
-        variant="outlined"
-        size="small"
-        value={timeFilter}
-        onChange={(e) => setTimeFilter(e.target.value)}
-      />
-      <TableContainer sx={{ maxHeight: 440, marginTop: 2 }}>
-        <Table stickyHeader aria-label="filtered table">
+      <TableContainer sx={{ maxHeight: 440 }}>
+        <Table stickyHeader aria-label="pulse data table">
           <TableHead>
             <TableRow>
-              <TableCell>ID</TableCell>
-              <TableCell align="right">Pulso</TableCell>
-              <TableCell align="right">DevUI</TableCell>
-              <TableCell align="right">Humedad</TableCell>
-              <TableCell align="right">Temperatura</TableCell>
-              <TableCell align="right">Batería</TableCell>
-              <TableCell align="right">Tiempo</TableCell>
-              <TableCell align="right">Diferencia</TableCell>
-              <TableCell align="right">Count</TableCell>
+              {columns.map((column) => (
+                <TableCell key={column.id} style={{ minWidth: column.minWidth }}>
+                  {column.label}
+                </TableCell>
+              ))}
             </TableRow>
           </TableHead>
           <TableBody>
-            {filteredRows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => (
-              <TableRow hover role="checkbox" tabIndex={-1} key={row.id}>
-                <TableCell>{row.id}</TableCell>
-                <TableCell align="right">{row.pulse}</TableCell>
-                <TableCell align="right">{row.DevUI}</TableCell>
-                <TableCell align="right">{row.humidity}</TableCell>
-                <TableCell align="right">{row.temperature}</TableCell>
-                <TableCell align="right">{row.battery}</TableCell>
-                <TableCell align="right">{row.time.toLocaleString()}</TableCell>
-                <TableCell align="right">{row.difference}</TableCell>
-                <TableCell align="right">{row.count}</TableCell>
+            {filteredRows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row, index) => (
+              <TableRow hover role="checkbox" tabIndex={-1} key={index}>
+                {columns.map((column) => (
+                  <TableCell key={column.id}>
+                    {column.id === "time" && row[column.id] instanceof Date
+                      ? row[column.id].toLocaleString()
+                      : row[column.id]}
+                  </TableCell>
+                ))}
               </TableRow>
             ))}
           </TableBody>
@@ -94,4 +99,6 @@ export default function Tabla({ rows }: TablaProps) {
       />
     </Paper>
   );
-}
+};
+
+export default PulseDataTable;
